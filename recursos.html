@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - Border</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7a5af5;
+            --primary-light: #937dff;
+            --secondary: #ff7eb3;
+            --accent: #4ecdc4;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light: #f0f0f0;
+            --gray: #a0a0a0;
+            --dark-gray: #444;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #0a0a12 100%);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+            color: white;
+            padding: 25px 15px;
+            box-shadow: var(--shadow);
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            overflow-y: auto;
+            transition: var(--transition);
+            border-right: 1px solid rgba(122, 90, 245, 0.2);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+            margin-right: 12px;
+            color: var(--accent);
+            background: rgba(122, 90, 245, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+        }
+        
+        .logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #7a5af5, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .nav-links li {
+            margin-bottom: 8px;
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-size: 16px;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(122, 90, 245, 0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .nav-links i {
+            margin-right: 12px;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+            color: var(--primary-light);
+        }
+        
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            margin-top: 20px;
+            background: rgba(10, 10, 18, 0.6);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(122, 90, 245, 0.3);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .profile-mini:hover {
+            background: rgba(122, 90, 245, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        .profile-mini img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px rgba(122, 90, 245, 0.5);
+        }
+        
+        .profile-mini h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: white;
+        }
+        
+        .profile-mini p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 30px;
+            background: linear-gradient(to bottom, #0a0a12, #0f0f1a);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 42, 0.8);
+            border-radius: 30px;
+            padding: 8px 20px;
+            box-shadow: var(--shadow);
+            width: 400px;
+            border: 1px solid rgba(122, 90, 245, 0.3);
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            padding: 8px 15px;
+            width: 100%;
+            font-size: 15px;
+            outline: none;
+            color: white;
+        }
+        
+        .search-bar input::placeholder {
+            color: var(--gray);
+        }
+        
+        .search-bar i {
+            color: var(--primary-light);
+            font-size: 18px;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification, .messages, .toggle-right-column {
+            position: relative;
+            margin-right: 20px;
+            font-size: 22px;
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 5px 8px;
+            border-radius: var(--border-radius);
+        }
+        
+        .notification:hover, .messages:hover, .toggle-right-column:hover {
+            color: var(--primary-light);
+            transform: scale(1.1);
+            background: rgba(122, 90, 245, 0.1);
+        }
+        
+        .notification::after, .messages::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            border: 2px solid var(--dark);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 42, 0.8);
+            padding: 8px 15px;
+            border-radius: 30px;
+            border: 1px solid rgba(122, 90, 245, 0.3);
+            transition: var(--transition);
+        }
+        
+        .user-profile:hover {
+            background: rgba(122, 90, 245, 0.15);
+        }
+        
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px rgba(122, 90, 245, 0.4);
+        }
+        
+        /* Content Grid (for resources page, adapted) */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column layout */
+            gap: 25px;
+            max-width: 1200px; /* Limit width for better readability */
+            margin: 0 auto; /* Center the content */
+        }
+
+        .card {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(122, 90, 245, 0.1);
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); 
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--light);
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-header i {
+            color: var(--primary-light);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .card-header i:hover {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Resources Specific Styles */
+        .resources-section {
+            padding-top: 10px;
+        }
+
+        .resources-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .resource-category {
+            margin-bottom: 30px;
+        }
+
+        .resource-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 42, 0.5);
+            border-radius: var(--border-radius);
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(122, 90, 245, 0.2);
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--light);
+        }
+
+        .resource-item:hover {
+            background: rgba(122, 90, 245, 0.15);
+            transform: translateX(5px);
+            border-color: var(--primary);
+        }
+
+        .resource-item i {
+            font-size: 24px;
+            margin-right: 15px;
+            color: var(--accent);
+        }
+
+        .resource-item .text-content {
+            flex-grow: 1;
+        }
+
+        .resource-item .text-content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--light);
+            margin-bottom: 5px;
+        }
+
+        .resource-item .text-content p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        .resource-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--border-radius);
+            object-fit: cover;
+            margin-left: 15px;
+            border: 1px solid rgba(122, 90, 245, 0.3);
+        }
+
+        /* Article specific styling */
+        .article-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .article-card {
+            background: rgba(26, 26, 42, 0.8);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid rgba(122, 90, 245, 0.2);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(122, 90, 245, 0.3);
+        }
+
+        .article-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(122, 90, 245, 0.1);
+        }
+
+        .article-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-bottom: 8px;
+        }
+
+        .article-content p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.4;
+            flex-grow: 1; /* Allow description to take available space */
+            margin-bottom: 10px;
+            max-height: 60px; /* Limit height for article description */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .article-read-more {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: var(--transition);
+            align-self: flex-start; /* Align button to start */
+        }
+
+        .article-read-more:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Space Background Effect */
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #0f0f1a 0%, #05050a 100%);
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Custom Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--dark-card);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--primary);
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-content h3 {
+            color: var(--primary-light);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            color: var(--light);
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .modal-content .close-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(122, 90, 245, 0.3);
+        }
+
+        .modal-content .close-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 90, 245, 0.4);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                padding: 25px 10px;
+            }
+            .logo h1, .profile-mini h3, .profile-mini p, .nav-links span {
+                display: none;
+            }
+            .logo {
+                justify-content: center;
+            }
+            .nav-links a {
+                justify-content: center;
+                padding: 15px;
+            }
+            .nav-links i {
+                margin-right: 0;
+                font-size: 24px;
+            }
+            .profile-mini {
+                justify-content: center;
+                padding: 15px 5px;
+            }
+            .profile-mini img {
+                margin-right: 0;
+            }
+            .main-content {
+                margin-left: 80px;
+            }
+            .search-bar {
+                width: 100%;
+            }
+            .user-actions {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            .user-actions > div {
+                margin-right: 10px;
+            }
+            .article-list {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                box-shadow: none;
+                border-right: none;
+                padding-bottom: 0;
+            }
+            .logo, .profile-mini {
+                display: none;
+            }
+            .nav-links {
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+                margin-top: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+                padding-top: 10px;
+            }
+            .nav-links li {
+                margin-bottom: 0;
+            }
+            .nav-links a {
+                flex-direction: column;
+                font-size: 12px;
+                padding: 8px 5px;
+            }
+            .nav-links i {
+                margin-right: 0;
+                margin-bottom: 5px;
+                font-size: 20px;
+            }
+            .search-bar {
+                width: 100%;
+                order: 1;
+                margin-bottom: 15px;
+            }
+            .user-actions {
+                order: 2;
+                width: 100%;
+                justify-content: space-around;
+                margin-bottom: 15px;
+            }
+            .user-profile {
+                display: none;
+            }
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .article-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .search-bar, .user-actions {
+                width: 100%;
+                margin-right: 0;
+            }
+            .notification, .messages, .toggle-right-column {
+                margin-right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Space Background -->
+    <div class="space-bg" id="space-bg"></div>
+    
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>Border</h1>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                <li><a href="amigos.html"><i class="fas fa-user-friends"></i> <span>Amigos</span></a></li>
+                <li><a href="grupos.html"><i class="fas fa-users"></i> <span>Grupos</span></a></li>
+                <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> <span>Eventos</span></a></li>
+                <li><a href="recursos.html" class="active"><i class="fas fa-book-open"></i> <span>Recursos</span></a></li>
+                <li><a href="terapeutas.html"><i class="fas fa-comment-medical"></i> <span>Terapeutas</span></a></li>
+                <li><a href="bienestar.html"><i class="fas fa-heartbeat"></i> <span>Bienestar</span></a></li>
+                <li><a href="configuracion.html"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+            </ul>
+            
+            <div class="profile-mini">
+                <img src="https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Perfil" onerror="this.onerror=null;this.src='https://placehold.co/200x200/7a5af5/ffffff?text=User';">
+                <div>
+                    <h3>Mayra Schwarzschild</h3>
+                    <p>Miembro desde 2023</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar en Border...">
+                </div>
+                
+                <div class="user-actions">
+                    <div class="notification">
+                        <i class="far fa-bell"></i>
+                    </div>
+                    <div class="messages">
+                        <i class="far fa-envelope"></i>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Usuario" onerror="this.onerror=null;this.src='https://placehold.co/200x200/7a5af5/ffffff?text=User';">
+                        <div>
+                            <h3>Mayra Schwarzschild</h3>
+                            <p>Trastorno Límite de la Personalidad</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-grid">
+                <!-- Section: Líneas de Ayuda y Contactos de Emergencia -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Líneas de Ayuda y Contactos de Emergencia</h2>
+                        <i class="fas fa-phone-volume"></i>
+                    </div>
+                    <div class="resources-section">
+                        <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">
+                            En momentos de crisis, no estás solo/a. Aquí encontrarás contactos vitales para obtener ayuda inmediata.
+                        </p>
+                        <a href="https://fundacionforo.com/prevencion-del-suicidio/" target="_blank" class="resource-item">
+                            <i class="fas fa-hand-holding-medical"></i>
+                            <div class="text-content">
+                                <h4>Prevención del Suicidio</h4>
+                                <p>Recursos y apoyo para la prevención del suicidio en Fundación Foro.</p>
+                            </div>
+                        </a>
+                        <a href="https://www.telefonodelaesperanza.org/" target="_blank" class="resource-item">
+                            <i class="fas fa-headset"></i>
+                            <div class="text-content">
+                                <h4>Teléfono de la Esperanza</h4>
+                                <p>Línea de ayuda gratuita para personas en crisis, disponible 24/7.</p>
+                            </div>
+                        </a>
+                        <a href="https://ludopatasanonimos.org/" target="_blank" class="resource-item">
+                            <i class="fas fa-dice-d6"></i>
+                            <div class="text-content">
+                                <h4>Ludópatas Anónimos</h4>
+                                <p>Encuentra grupos de apoyo para la recuperación de la ludopatía.</p>
+                            </div>
+                        </a>
+                        <a href="https://na.org/es/" target="_blank" class="resource-item">
+                            <i class="fas fa-leaf"></i>
+                            <div class="text-content">
+                                <h4>Narcóticos Anónimos (N.A.)</h4>
+                                <p>Comunidad global para la recuperación de adicciones a sustancias.</p>
+                            </div>
+                        </a>
+                        <a href="https://aa.org/es" target="_blank" class="resource-item">
+                            <i class="fas fa-wine-glass"></i>
+                            <div class="text-content">
+                                <h4>Alcohólicos Anónimos (A.A.)</h4>
+                                <p>Apoyo para la recuperación del alcoholismo.</p>
+                            </div>
+                        </a>
+                        <p style="color: var(--gray); font-size: 12px; margin-top: 10px; font-style: italic;">
+                            *Recuerda, un clic a tiempo puede salvar un cuento entero.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section: Artículos y Guías sobre Salud Mental -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Artículos y Guías sobre Salud Mental</h2>
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="resources-section">
+                        <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">
+                            Profundiza en el conocimiento de tu bienestar. Herramientas para tu caja de vida, ¡sin costo de envío!
+                        </p>
+                        <div class="article-list">
+                            <div class="article-card">
+                                <img src="https://placehold.co/600x150/7a5af5/ffffff?text=Mindfulness" alt="Artículo Mindfulness" onerror="this.onerror=null;this.src='https://placehold.co/600x150/7a5af5/ffffff?text=Mindfulness';">
+                                <div class="article-content">
+                                    <h4>Mindfulness para el Manejo de la Ansiedad</h4>
+                                    <p>Descubre cómo la atención plena puede ayudarte a calmar la mente y reducir el estrés diario. Incluye ejercicios prácticos.</p>
+                                    <a href="#" class="article-read-more" data-article-title="Mindfulness para el Manejo de la Ansiedad" data-article-content="El mindfulness, o atención plena, es una práctica que implica prestar atención al momento presente sin juzgar. Se ha demostrado que reduce significativamente los síntomas de ansiedad y depresión. Al practicarlo, aprendemos a observar nuestros pensamientos y emociones sin quedarnos atrapados en ellos, lo que nos permite responder de manera más consciente en lugar de reaccionar impulsivamente.">Leer más</a>
+                                </div>
+                            </div>
+                            <div class="article-card">
+                                <img src="https://placehold.co/600x150/4ecdc4/ffffff?text=TLP" alt="Artículo TLP" onerror="this.onerror=null;this.src='https://placehold.co/600x150/4ecdc4/ffffff?text=TLP';">
+                                <div class="article-content">
+                                    <h4>Desmitificando el Trastorno Límite de la Personalidad (TLP)</h4>
+                                    <p>Exploramos qué es el TLP, sus síntomas y cómo la Terapia Dialéctico Comportamental (DBT) es clave en su tratamiento. ¿Sabías que la DBT fue desarrollada inicialmente para personas con tendencias suicidas?</p>
+                                    <a href="#" class="article-read-more" data-article-title="Desmitificando el Trastorno Límite de la Personalidad (TLP)" data-article-content="El Trastorno Límite de la Personalidad (TLP) es una condición de salud mental que afecta la regulación emocional, las relaciones interpersonales, la autoimagen y el comportamiento impulsivo. La Terapia Dialéctico Comportamental (DBT) es el tratamiento más efectivo para el TLP, centrándose en habilidades de mindfulness, tolerancia al malestar, regulación emocional y efectividad interpersonal. Fue desarrollada por Marsha Linehan, inicialmente para pacientes con alta suicidalidad.">Leer más</a>
+                                </div>
+                            </div>
+                            <div class="article-card">
+                                <img src="https://placehold.co/600x150/ff7eb3/ffffff?text=Estres" alt="Artículo Estrés" onerror="this.onerror=null;this.src='https://placehold.co/600x150/ff7eb3/ffffff?text=Estres';">
+                                <div class="article-content">
+                                    <h4>Estrategias para Afrontar el Estrés Crónico</h4>
+                                    <p>Consejos prácticos para manejar el estrés a largo plazo y evitar el agotamiento mental. ¡Pequeños cambios hacen grandes diferencias!</p>
+                                    <a href="#" class="article-read-more" data-article-title="Estrategias para Afrontar el Estrés Crónico" data-article-content="El estrés crónico puede tener un impacto significativo en nuestra salud física y mental. Adoptar hábitos saludables como el ejercicio regular, una dieta equilibrada, sueño suficiente y técnicas de relajación como la respiración profunda pueden ayudar a gestionar el estrés. Establecer límites, delegar tareas y buscar apoyo social son también herramientas importantes para mantener el equilibrio.">Leer más</a>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 style="margin-top: 30px;">Recursos Específicos sobre TLP</h3>
+                        <a href="https://borderlinepersonalitidisorder.github.io/TLP/" target="_blank" class="resource-item">
+                            <i class="fas fa-compass"></i>
+                            <div class="text-content">
+                                <h4>Universo Borderline (TLP)</h4>
+                                <p>Página con información detallada y recursos sobre el Trastorno Límite de la Personalidad.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Section: Directorio de Profesionales (General) -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Directorio de Profesionales de la Salud Mental</h2>
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="resources-section">
+                        <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">
+                            Encuentra al profesional adecuado para tu camino hacia el bienestar.
+                        </p>
+                        <a href="https://www.psicologos.org.ar/" target="_blank" class="resource-item">
+                            <i class="fas fa-user-friends"></i>
+                            <div class="text-content">
+                                <h4>Colegio de Psicólogos de Argentina</h4>
+                                <p>Directorio oficial para encontrar psicólogos certificados en tu región.</p>
+                            </div>
+                        </a>
+                        <a href="https://www.psiquiatras.com/" target="_blank" class="resource-item">
+                            <i class="fas fa-brain"></i>
+                            <div class="text-content">
+                                <h4>Sociedad Española de Psiquiatría y Salud Mental (referencia internacional)</h4>
+                                <p>Información y directorio de psiquiatras. Consulta organizaciones locales en tu país.</p>
+                            </div>
+                        </a>
+                        <a href="https://www.aato.org.ar/" target="_blank" class="resource-item">
+                            <i class="fas fa-hand-sparkles"></i>
+                            <div class="text-content">
+                                <h4>Asociación Argentina de Terapia Ocupacional</h4>
+                                <p>Encuentra terapeutas ocupacionales para mejorar tu vida diaria.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Section: Recursos Multimedia -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Recursos Multimedia</h2>
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="resources-section">
+                        <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">
+                            Contenido audiovisual para aprender y reflexionar sobre la salud mental.
+                        </p>
+                        <a href="https://open.spotify.com/show/your-favorite-podcast" target="_blank" class="resource-item">
+                            <i class="fas fa-podcast"></i>
+                            <div class="text-content">
+                                <h4>Podcast: "Mente Sana"</h4>
+                                <p>Episodios semanales con expertos en psicología y bienestar emocional.</p>
+                            </div>
+                        </a>
+                        <a href="https://www.youtube.com/user/yourchannel" target="_blank" class="resource-item">
+                            <i class="fab fa-youtube"></i>
+                            <div class="text-content">
+                                <h4>Canal de YouTube: "Conciencia Activa"</h4>
+                                <p>Videos educativos y ejercicios de relajación para el día a día.</p>
+                            </div>
+                        </a>
+                        <a href="https://www.netflix.com/title/your-documentary-id" target="_blank" class="resource-item">
+                            <i class="fas fa-film"></i>
+                            <div class="text-content">
+                                <h4>Documental: "El Lado Invisible"</h4>
+                                <p>Una mirada profunda a las experiencias de quienes viven con condiciones de salud mental.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Section: Libros y Bibliografía Recomendada -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Libros y Bibliografía Recomendada</h2>
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="resources-section">
+                        <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">
+                            Explora nuevas perspectivas a través de la lectura. ¡La sabiduría aguarda!
+                        </p>
+                        <a href="#" class="resource-item" onclick="showCustomModal('Libro Recomendado', 'Título: &quot;El hombre en busca de sentido&quot; de Viktor Frankl. Un libro que nos recuerda la capacidad del espíritu humano para encontrar propósito incluso en las circunstancias más adversas.'); return false;">
+                            <i class="fas fa-book-open"></i>
+                            <div class="text-content">
+                                <h4>"El hombre en busca de sentido"</h4>
+                                <p>Viktor Frankl. Un clásico sobre la logoterapia y la resiliencia.</p>
+                            </div>
+                        </a>
+                        <a href="#" class="resource-item" onclick="showCustomModal('Libro Recomendado', 'Título: &quot;Danza con el presente&quot; de Jon Kabat-Zinn. Una guía práctica para iniciarse en el mindfulness y la meditación.'); return false;">
+                            <i class="fas fa-book-reader"></i>
+                            <div class="text-content">
+                                <h4>"Danza con el presente"</h4>
+                                <p>Jon Kabat-Zinn. Introducción al mindfulness y la reducción del estrés.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Section: Aplicaciones y Herramientas Digitales -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Aplicaciones y Herramientas Digitales</h2>
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="resources-section">
+                        <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">
+                            Apps que te acompañan en tu camino al bienestar.
+                        </p>
+                        <a href="https://www.calm.com/" target="_blank" class="resource-item">
+                            <i class="fas fa-cloud"></i>
+                            <div class="text-content">
+                                <h4>Calm</h4>
+                                <p>Aplicación de meditación, sueño y relajación.</p>
+                            </div>
+                        </a>
+                        <a href="https://www.headspace.com/" target="_blank" class="resource-item">
+                            <i class="fas fa-spa"></i>
+                            <div class="text-content">
+                                <h4>Headspace</h4>
+                                <p>Guías de meditación y ejercicios para la mente.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Section: Información Legal y Derechos -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Información Legal y Derechos</h2>
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="resources-section">
+                        <p style="color: var(--gray); font-size: 14px; margin-bottom: 15px;">
+                            Conoce tus derechos en el ámbito de la salud mental. Tus derechos, más firmes que un post-it en el alma.
+                        </p>
+                        <a href="https://www.argentina.gob.ar/justicia/derechos-y-obligaciones/ley-nacional-salud-mental-26657" target="_blank" class="resource-item">
+                            <i class="fas fa-gavel"></i>
+                            <div class="text-content">
+                                <h4>Ley Nacional de Salud Mental (Argentina)</h4>
+                                <p>Accede al texto completo de la Ley 26.657 y sus implicaciones.</p>
+                            </div>
+                        </a>
+                        <a href="https://www.who.int/mental_health/rights/es/" target="_blank" class="resource-item">
+                            <i class="fas fa-globe-americas"></i>
+                            <div class="text-content">
+                                <h4>Derechos en Salud Mental (OMS)</h4>
+                                <p>Principios de la OMS sobre la protección de los derechos de las personas con trastornos mentales.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal Structure -->
+    <div class="modal-overlay" id="custom-modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-title">¡Acción Realizada!</h3>
+            <p id="modal-message">Este es un mensaje de prueba.</p>
+            <button class="close-btn" id="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Star background effect (reused from other pages)
+            const spaceBg = document.getElementById('space-bg');
+            const numStars = 100;
+            for (let i = 0; i < numStars; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDuration = Math.random() * 2 + 1 + 's';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.style.opacity = Math.random();
+                star.style.boxShadow = `0 0 ${Math.random() * 5 + 2}px white`;
+                spaceBg.appendChild(star);
+            }
+
+            // --- Custom Modal Logic (reused from other pages) ---
+            const modalOverlay = document.getElementById('custom-modal-overlay');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            /**
+             * Muestra el modal personalizado con un título y mensaje.
+             * @param {string} title - El título del modal.
+             * @param {string} message - El mensaje a mostrar.
+             */
+            function showCustomModal(title, message) {
+                modalTitle.innerHTML = title; // Use innerHTML to allow <br> for line breaks
+                modalMessage.innerHTML = message; // Use innerHTML for line breaks
+                modalOverlay.classList.add('show');
+            }
+
+            // Cierra el modal cuando se hace clic en el botón de cerrar
+            if (modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', () => {
+                    modalOverlay.classList.remove('show');
+                });
+            }
+
+            // Cierra el modal si se hace clic fuera de su contenido
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', (event) => {
+                    if (event.target === modalOverlay) {
+                        modalOverlay.classList.remove('show');
+                    }
+                });
+            }
+
+            // --- Article Read More Logic ---
+            document.querySelectorAll('.article-read-more').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevent default link behavior
+                    const articleTitle = button.dataset.articleTitle;
+                    const articleContent = button.dataset.articleContent;
+                    showCustomModal(`Artículo: ${articleTitle}`, articleContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
