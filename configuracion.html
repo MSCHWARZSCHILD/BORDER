@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Border - Red Social para Pacientes Mentales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Definición de variables CSS por defecto para el tema oscuro */
+        :root {
+            --primary: #7a5af5;
+            --primary-light: #937dff;
+            --secondary: #ff7eb3;
+            --accent: #4ecdc4;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light: #f0f0f0;
+            --gray: #a0a0a0;
+            --dark-gray: #444;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+            --background: linear-gradient(135deg, #0f0f1a 0%, #0a0a12 100%);
+            --sidebar-bg: linear-gradient(to bottom, #1a1a2e, #16213e);
+            --text-color: var(--light);
+            --placeholder-color: var(--gray);
+            --border-color-rgba: rgba(122, 90, 245, 0.2);
+            --card-bg-rgba: rgba(26, 26, 42, 0.8);
+            --input-bg-rgba: rgba(26, 26, 42, 0.5);
+            --input-border-rgba: rgba(122, 90, 245, 0.2);
+            --link-color: rgba(255, 255, 255, 0.7);
+            --link-hover-bg: rgba(122, 90, 245, 0.2);
+        }
+        
+        /* Tema Claro */
+        body.theme-light {
+            --primary: #4267B2; /* Facebook Blue */
+            --primary-light: #6682BF;
+            --secondary: #FF6347; /* Tomato */
+            --accent: #3CB371; /* Medium Sea Green */
+            --dark: #f0f0f0;
+            --darker: #e0e0e0;
+            --dark-card: #ffffff;
+            --light: #333333; /* Darker text for light background */
+            --gray: #666666;
+            --background: linear-gradient(135deg, #f0f2f5 0%, #e0e2e5 100%); /* Light background gradient */
+            --sidebar-bg: #ffffff;
+            --text-color: var(--light);
+            --placeholder-color: var(--gray);
+            --border-color-rgba: rgba(66, 103, 178, 0.2); /* Lighter border for light theme */
+            --card-bg-rgba: rgba(255, 255, 255, 0.9); /* Slightly transparent white for cards */
+            --input-bg-rgba: rgba(240, 242, 245, 0.8); /* Light grey input background */
+            --input-border-rgba: rgba(66, 103, 178, 0.3);
+            --link-color: #333333;
+            --link-hover-bg: rgba(66, 103, 178, 0.1);
+        }
+
+        /* Tema Acuático (reusing existing purple-accent but adapting variables) */
+        body.theme-purple-accent {
+            --primary: #9B59B6; /* Amethyst */
+            --primary-light: #BE90D4; /* Lighter Amethyst */
+            --secondary: #F39C12; /* Orange */
+            --accent: #2ECC71; /* Emerald */
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light: #f0f0f0;
+            --gray: #a0a0a0;
+            --background: linear-gradient(135deg, #0f0f1a 0%, #0a0a12 100%);
+            --sidebar-bg: linear-gradient(to bottom, #1a1a2e, #16213e);
+            --text-color: var(--light);
+            --placeholder-color: var(--gray);
+            --border-color-rgba: rgba(155, 89, 182, 0.2);
+            --card-bg-rgba: rgba(26, 26, 42, 0.8);
+            --input-bg-rgba: rgba(26, 26, 42, 0.5);
+            --input-border-rgba: rgba(155, 89, 182, 0.2);
+            --link-color: rgba(255, 255, 255, 0.7);
+            --link-hover-bg: rgba(155, 89, 182, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--background); /* Usa la variable de fondo */
+            color: var(--text-color); /* Usa la variable de color de texto */
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg); /* Usa la variable de fondo */
+            color: white;
+            padding: 25px 15px;
+            box-shadow: var(--shadow);
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            overflow-y: auto;
+            transition: var(--transition);
+            border-right: 1px solid var(--border-color-rgba);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+            margin-right: 12px;
+            color: var(--accent);
+            background: rgba(122, 90, 245, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+        }
+        
+        .logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .nav-links li {
+            margin-bottom: 8px;
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--link-color); /* Usa la variable de color */
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-size: 16px;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background: var(--link-hover-bg);
+            color: var(--light); /* Usa la variable de color de texto */
+            transform: translateX(5px);
+        }
+        
+        .nav-links i {
+            margin-right: 12px;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+            color: var(--primary-light);
+        }
+        
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            margin-top: 20px;
+            background: rgba(10, 10, 18, 0.6);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color-rgba);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .profile-mini:hover {
+            background: rgba(122, 90, 245, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        .profile-mini img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px rgba(122, 90, 245, 0.5);
+        }
+        
+        .profile-mini h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: var(--light); /* Usa la variable de color de texto */
+        }
+        
+        .profile-mini p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 30px;
+            background: var(--background); /* Usa la variable de fondo */
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg-rgba);
+            border-radius: 30px;
+            padding: 8px 20px;
+            box-shadow: var(--shadow);
+            width: 400px;
+            border: 1px solid var(--border-color-rgba);
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            padding: 8px 15px;
+            width: 100%;
+            font-size: 15px;
+            outline: none;
+            color: var(--text-color); /* Usa la variable de color de texto */
+        }
+        
+        .search-bar input::placeholder {
+            color: var(--placeholder-color);
+        }
+        
+        .search-bar i {
+            color: var(--primary-light);
+            font-size: 18px;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification, .messages, .toggle-right-column {
+            position: relative;
+            margin-right: 20px;
+            font-size: 22px;
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 5px 8px;
+            border-radius: var(--border-radius);
+        }
+        
+        .notification:hover, .messages:hover, .toggle-right-column:hover {
+            color: var(--primary-light);
+            transform: scale(1.1);
+            background: var(--border-color-rgba);
+        }
+        
+        .notification::after, .messages::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            border: 2px solid var(--dark);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg-rgba);
+            padding: 8px 15px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color-rgba);
+            transition: var(--transition);
+        }
+        
+        .user-profile:hover {
+            background: rgba(122, 90, 245, 0.15);
+        }
+        
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px rgba(122, 90, 245, 0.4);
+        }
+        
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr 250px; /* Fixed sidebars, flexible middle */
+            gap: 20px; /* Reduced gap */
+            transition: grid-template-columns 0.3s ease-in-out;
+        }
+
+        /* Specific column styling */
+        .left-column, .middle-column, .right-column {
+            display: block;
+        }
+        
+        /* Right column specific styles for deployable functionality */
+        .right-column {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            border: 1px solid var(--border-color-rgba);
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* Class for collapsed state of right column */
+        .right-column.collapsed {
+            min-width: 0;
+            max-width: 0;
+            padding: 0;
+            opacity: 0;
+            visibility: hidden;
+            border: none;
+        }
+
+        .card {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color-rgba);
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(122, 90, 245, 0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--light); /* Usa la variable de color de texto */
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-header i {
+            color: var(--primary-light);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .card-header i:hover {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+        
+        /* Mood Tracker */
+        .mood-tracker .moods {
+            display: flex; /* Changed to flex */
+            flex-wrap: wrap; /* Allow items to wrap */
+            justify-content: space-between; /* Distribute items with space */
+            margin-bottom: 20px;
+        }
+        
+        .mood {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 10px;
+            border-radius: var(--border-radius);
+            background: var(--input-bg-rgba);
+            border: 1px solid var(--input-border-rgba);
+            margin: 5px; /* Added margin for spacing */
+            flex: 1 1 calc(25% - 10px); /* Adjust width to fit 4 per row with margin */
+            min-width: 60px; /* Ensure a minimum width for small screens */
+        }
+        
+        .mood:hover {
+            background: rgba(122, 90, 245, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .mood.selected {
+            background: var(--primary-light); /* Adjusting selected mood background */
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 15px rgba(122, 90, 245, 0.3);
+        }
+        
+        .mood-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary), #937dff);
+            color: white;
+        }
+        
+        .mood-1 { background: linear-gradient(135deg, #ff7eb3, #ff758c); }
+        .mood-2 { background: linear-gradient(135deg, #6a71e6, #4e54c8); }
+        .mood-3 { background: linear-gradient(135deg, #937dff, #7a5af5); }
+        .mood-4 { background: linear-gradient(135deg, #a29bfe, #6366f1); }
+        .mood-5 { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+        .mood-6 { background: linear-gradient(135deg, #55efc4, #00b894); }
+        .mood-7 { background: linear-gradient(135deg, #fdcb6e, #f39c12); }
+        .mood-8 { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+        
+        .mood span {
+            font-size: 13px;
+            color: var(--light); /* Usa la variable de color de texto */
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        /* Create Post */
+        .create-post {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color-rgba);
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .post-header img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px rgba(122, 90, 245, 0.3);
+        }
+        
+        .post-input {
+            flex: 1;
+            background: var(--input-bg-rgba);
+            border: 1px solid var(--input-border-rgba);
+            border-radius: 30px;
+            padding: 12px 20px;
+            font-size: 15px;
+            transition: var(--transition);
+            color: var(--text-color); /* Usa la variable de color de texto */
+        }
+        
+        .post-input:hover, .post-input:focus {
+            border-color: var(--primary-light);
+            background: var(--card-bg-rgba);
+        }
+        
+        .post-input::placeholder {
+            color: var(--placeholder-color);
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .post-action:hover {
+            background: rgba(122, 90, 245, 0.1);
+            color: var(--primary-light);
+        }
+        
+        .post-action i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        /* Feed */
+        .feed {
+            margin-bottom: 30px;
+        }
+        
+        .post {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 1px solid var(--border-color-rgba);
+            transition: var(--transition);
+        }
+        
+        .post:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(122, 90, 245, 0.2);
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .post-header img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px rgba(122, 90, 245, 0.3);
+        }
+        
+        .post-user-info h3 {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 3px;
+            color: var(--light); /* Usa la variable de color de texto */
+        }
+        
+        .post-user-info p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        
+        .post-content {
+            padding: 0 20px 15px;
+        }
+        
+        .post-text {
+            margin-bottom: 15px;
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-color); /* Usa la variable de color de texto */
+        }
+        
+        .post-image {
+            width: 100%;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color-rgba);
+            display: block; /* Ensure the image takes up its own line */
+            height: auto; /* Maintain aspect ratio */
+            max-width: 100%; /* Ensure it doesn't overflow its container */
+        }
+        
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+        
+        .post-action-btn {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .post-action-btn:hover {
+            background: rgba(122, 90, 245, 0.1);
+            color: var(--primary-light);
+        }
+        
+        .post-action-btn i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        /* Comment Section */
+        .comments-section {
+            padding: 0 20px 20px;
+            display: none; /* Hidden by default */
+        }
+        
+        .comments-container {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .comment {
+            display: flex;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--input-bg-rgba);
+            border-radius: var(--border-radius);
+        }
+        
+        .comment img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 1px solid var(--primary);
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--light); /* Usa la variable de color de texto */
+        }
+        
+        .comment-time {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .comment-text {
+            font-size: 14px;
+            color: var(--text-color); /* Usa la variable de color de texto */
+        }
+        
+        .add-comment {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .add-comment img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .comment-input {
+            flex: 1;
+            background: var(--input-bg-rgba);
+            border: 1px solid var(--input-border-rgba);
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: var(--text-color); /* Usa la variable de color de texto */
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        .comment-input:focus {
+            border-color: var(--primary-light);
+        }
+        
+        .send-comment {
+            margin-left: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .send-comment:hover {
+            background: var(--primary-light);
+            transform: scale(1.1);
+        }
+        
+        /* Resources / Professionals styling */
+        .resource {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--input-bg-rgba);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid var(--input-border-rgba);
+        }
+        
+        .resource:hover {
+            background: rgba(122, 90, 245, 0.15);
+            transform: translateX(5px);
+            border-color: var(--primary);
+        }
+        
+        .resource-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 18px;
+            color: white;
+        }
+        
+        .resource-info h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: var(--light); /* Usa la variable de color de texto */
+        }
+        
+        .resource-info p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* Support Groups */
+        .group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .group:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .group img {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--border-radius);
+            object-fit: cover;
+            margin-right: 15px;
+            border: 1px solid var(--border-color-rgba);
+        }
+        
+        .group-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--light); /* Usa la variable de color de texto */
+        }
+        
+        .group-info p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+        
+        .group-members {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: var(--gray);
+        }
+        
+        .group-members i {
+            margin-right: 5px;
+        }
+        
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(122, 90, 245, 0.3);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(122, 90, 245, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(122, 90, 245, 0.1);
+            box-shadow: 0 4px 15px rgba(122, 90, 245, 0.2);
+        }
+        
+        .btn-small {
+            padding: 6px 15px;
+            font-size: 14px;
+        }
+        
+        /* Groups Tabs */
+        .groups-tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary-light);
+        }
+        
+        .tab:hover:not(.active) {
+            color: var(--primary-light);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Space Background Effect */
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--background);
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        /* Emotion History */
+        .emotion-history {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .history-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: var(--input-bg-rgba);
+            border-radius: var(--border-radius);
+        }
+        
+        .history-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        .history-details {
+            flex: 1;
+        }
+        
+        .history-mood {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .history-date {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Custom Modal Styles (reused from amigos.html for consistency) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--dark-card);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--primary);
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-content h3 {
+            color: var(--primary-light);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            color: var(--text-color); /* Usa la variable de color de texto */
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .modal-content .close-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(122, 90, 245, 0.3);
+        }
+
+        .modal-content .close-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 90, 245, 0.4);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 1fr; /* Only middle column visible */
+            }
+            .right-column {
+                display: none; /* Hidden by default */
+            }
+            .main-content {
+                margin-left: 260px; /* Keep sidebar margin */
+            }
+            /* When right column is toggled on smaller screens, it will appear as an overlay */
+            .right-column.active-mobile-overlay {
+                display: block;
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 260px; /* Fixed width for overlay */
+                height: 100vh;
+                z-index: 990;
+                background: var(--sidebar-bg);
+                box-shadow: var(--shadow);
+                transform: translateX(100%);
+                animation: slideInRight 0.3s forwards;
+            }
+
+            .right-column.active-mobile-overlay.collapsed {
+                animation: slideOutRight 0.3s forwards;
+            }
+
+            @keyframes slideInRight {
+                from { transform: translateX(100%); }
+                to { transform: translateX(0); }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); }
+                to { transform: translateX(100%); }
+            }
+
+            .settings-page, .create-post-page { /* Ensure settings page is also responsive */
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                padding: 25px 10px;
+            }
+            
+            .logo h1, .profile-mini h3, .profile-mini p, .nav-links span {
+                display: none;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .nav-links a {
+                justify-content: center;
+                padding: 15px;
+            }
+            
+            .nav-links i {
+                margin-right: 0;
+            }
+
+            .profile-mini {
+                justify-content: center;
+            }
+
+            .profile-mini img {
+                margin-right: 0;
+            }
+
+            .main-content {
+                margin-left: 80px; /* Adjust margin for collapsed sidebar */
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr; /* Only middle column on smaller screens */
+            }
+
+            .settings-page, .create-post-page { /* Ensure settings page is also responsive */
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .user-actions {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .mood-tracker .moods {
+                justify-content: center; /* Center moods on smaller screens */
+            }
+
+            .mood {
+                flex: 1 1 calc(33% - 10px); /* 3 per row */
+            }
+
+            .post-actions {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .post-action {
+                flex: 1 1 auto;
+                justify-content: center;
+            }
+
+            .settings-page .card, .create-post-page .card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 20px;
+            }
+
+            .mood {
+                flex: 1 1 calc(50% - 10px); /* 2 per row */
+            }
+
+            .search-bar {
+                padding: 5px 15px;
+            }
+
+            .post-input, .comment-input, .text-input { /* Apply to all inputs */
+                padding: 10px 15px;
+            }
+
+            .user-profile img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .notification, .messages, .toggle-right-column {
+                margin-right: 10px;
+                font-size: 20px;
+            }
+        }
+
+        /* Styles for the new settings page */
+        .settings-page {
+            display: none; /* Hidden by default */
+            padding: 30px;
+        }
+
+        .settings-page h2, .create-post-page h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .settings-section {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color-rgba);
+        }
+
+        .settings-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary-light);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 10px;
+        }
+
+        .settings-option {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .settings-option:last-child {
+            border-bottom: none;
+        }
+
+        .settings-option label {
+            font-size: 16px;
+            color: var(--light);
+            flex: 1;
+        }
+
+        .settings-option .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-option select,
+        .settings-option input[type="text"] {
+            background: var(--input-bg-rgba);
+            border: 1px solid var(--input-border-rgba);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--text-color);
+            font-size: 15px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .settings-option select:focus,
+        .settings-option input[type="text"]:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 2px rgba(122, 90, 245, 0.3);
+        }
+
+        /* Toggle Switch Styling */
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 45px;
+          height: 25px;
+        }
+
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: var(--gray);
+          transition: .4s;
+          border-radius: 25px;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 17px;
+          width: 17px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          transition: .4s;
+          border-radius: 50%;
+        }
+
+        input:checked + .slider {
+          background-color: var(--primary);
+        }
+
+        input:focus + .slider {
+          box-shadow: 0 0 1px var(--primary);
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(20px);
+        }
+
+        .settings-action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        /* Styles for the new create post page */
+        .create-post-page {
+            display: none; /* Hidden by default */
+            padding: 30px;
+            max-width: 800px; /* Limit width for better readability */
+            margin: 0 auto; /* Center the page content */
+        }
+    </style>
+</head>
+<body>
+    <!-- Space Background Effect -->
+    <div class="space-bg" id="spaceBg"></div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>Border</h1>
+            </div>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="#" class="active" data-page="home"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="#" data-page="create-post"><i class="fas fa-plus-circle"></i> <span>Crear Publicación</span></a></li>
+                    <li><a href="#" data-page="friends"><i class="fas fa-user-friends"></i> <span>Amigos</span></a></li>
+                    <li><a href="#" data-page="messages"><i class="fas fa-comments"></i> <span>Mensajes</span></a></li>
+                    <li><a href="#" data-page="notifications"><i class="fas fa-bell"></i> <span>Notificaciones</span></a></li>
+                    <li><a href="#" data-page="events"><i class="fas fa-calendar-alt"></i> <span>Eventos</span></a></li>
+                    <li><a href="#" data-page="groups"><i class="fas fa-users"></i> <span>Grupos de Apoyo</span></a></li>
+                    <li><a href="#" data-page="progress"><i class="fas fa-chart-line"></i> <span>Progreso</span></a></li>
+                    <li><a href="#" data-page="settings"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+                    <li><a href="#" data-page="logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
+                </ul>
+            </nav>
+            <div class="profile-mini">
+                <img src="https://placehold.co/40x40/7a5af5/ffffff?text=U" alt="Profile Picture">
+                <div>
+                    <h3 id="profile-display-name">Usuario Actual</h3>
+                    <p id="current-user-id">Cargando ID...</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar en Border...">
+                </div>
+                <div class="user-actions">
+                    <div class="notification">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="messages">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="toggle-right-column">
+                        <i class="fas fa-columns"></i>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://placehold.co/45x45/4ecdc4/ffffff?text=M" alt="User Profile Picture">
+                        <span id="header-display-name">Mi Perfil</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="content-grid" id="main-content-grid">
+                <div class="left-column">
+                    <!-- This column could contain "Trends" or "Suggested Friends" in a full implementation -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Tendencias</h2>
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <p>Contenido de tendencias aquí...</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Amigos Sugeridos</h2>
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <p>Sugerencias de amigos aquí...</p>
+                    </div>
+                </div>
+
+                <div class="middle-column">
+                    <!-- Feed Section -->
+                    <div class="feed">
+                        <div class="post">
+                            <div class="post-header">
+                                <img src="https://placehold.co/45x45/7a5af5/ffffff?text=A" alt="Author Profile Picture">
+                                <div class="post-user-info">
+                                    <h3>Ana Mendoza</h3>
+                                    <p>Hace 2 horas</p>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p class="post-text">Hoy fue un día desafiante, pero logré terminar ese libro que tanto me costaba. ¡Pequeñas victorias! Estoy orgullosa de este progreso y quería compartirlo con ustedes. ❤️</p>
+                                <img src="https://placehold.co/600x400/937dff/ffffff?text=Libro+Terminado" alt="Post Image" class="post-image">
+                            </div>
+                            <div class="post-stats">
+                                <span><i class="fas fa-heart"></i> 150</span>
+                                <span><i class="fas fa-comment"></i> 25</span>
+                            </div>
+                            <div class="post-actions">
+                                <div class="post-action-btn"><i class="fas fa-heart"></i> Me gusta</div>
+                                <div class="post-action-btn toggle-comments" data-post-id="1"><i class="fas fa-comment"></i> Comentar</div>
+                                <div class="post-action-btn"><i class="fas fa-share"></i> Compartir</div>
+                            </div>
+                            <!-- Comment Section for Post 1 -->
+                            <div class="comments-section" id="comments-post-1">
+                                <div class="comments-container">
+                                    <div class="comment">
+                                        <img src="https://placehold.co/35x35/ff7eb3/ffffff?text=J" alt="Commenter Profile Picture">
+                                        <div class="comment-content">
+                                            <div class="comment-header">
+                                                <span class="comment-author">Juan Pérez</span>
+                                                <span class="comment-time">Hace 1 hora</span>
+                                            </div>
+                                            <p class="comment-text">¡Eso es genial, Ana! Cada pequeño paso cuenta. Sigue así. 😊</p>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <img src="https://placehold.co/35x35/4ecdc4/ffffff?text=M" alt="Commenter Profile Picture">
+                                        <div class="comment-content">
+                                            <div class="comment-header">
+                                                <span class="comment-author">María González</span>
+                                                <span class="comment-time">Hace 30 minutos</span>
+                                            </div>
+                                            <p class="comment-text">¡Felicidades! ¿Cuál libro era?</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add-comment">
+                                    <img src="https://placehold.co/35x35/4ecdc4/ffffff?text=M" alt="Your Profile Picture">
+                                    <input type="text" class="comment-input" placeholder="Añadir un comentario...">
+                                    <button class="send-comment"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="post">
+                            <div class="post-header">
+                                <img src="https://placehold.co/45x45/ff7eb3/ffffff?text=C" alt="Author Profile Picture">
+                                <div class="post-user-info">
+                                    <h3>Carlos Ruiz</h3>
+                                    <p>Hace 5 horas</p>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p class="post-text">Sintiéndome un poco melancólico hoy, pero recordé que el autocuidado es clave. Salí a caminar y ya me siento un poco mejor. A veces, solo necesitas un poco de aire fresco. 🌳</p>
+                            </div>
+                            <div class="post-stats">
+                                <span><i class="fas fa-heart"></i> 80</span>
+                                <span><i class="fas fa-comment"></i> 10</span>
+                            </div>
+                            <div class="post-actions">
+                                <div class="post-action-btn"><i class="fas fa-heart"></i> Me gusta</div>
+                                <div class="post-action-btn toggle-comments" data-post-id="2"><i class="fas fa-comment"></i> Comentar</div>
+                                <div class="post-action-btn"><i class="fas fa-share"></i> Compartir</div>
+                            </div>
+                             <!-- Comment Section for Post 2 -->
+                             <div class="comments-section" id="comments-post-2">
+                                <div class="comments-container">
+                                    <div class="comment">
+                                        <img src="https://placehold.co/35x35/7a5af5/ffffff?text=L" alt="Commenter Profile Picture">
+                                        <div class="comment-content">
+                                            <div class="comment-header">
+                                                <span class="comment-author">Laura Fernández</span>
+                                                <span class="comment-time">Hace 2 horas</span>
+                                            </div>
+                                            <p class="comment-text">¡Absolutamente! La naturaleza siempre ayuda. Espero que te sientas mejor.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add-comment">
+                                    <img src="https://placehold.co/35x35/4ecdc4/ffffff?text=M" alt="Your Profile Picture">
+                                    <input type="text" class="comment-input" placeholder="Añadir un comentario...">
+                                    <button class="send-comment"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <!-- Mood Tracker -->
+                    <div class="mood-tracker card">
+                        <div class="card-header">
+                            <h2>¿Cómo te sientes hoy?</h2>
+                            <i class="fas fa-face-smile"></i>
+                        </div>
+                        <div class="moods">
+                            <div class="mood" data-mood="happy">
+                                <div class="mood-icon mood-6"><i class="far fa-laugh-beam"></i></div>
+                                <span>Feliz</span>
+                            </div>
+                            <div class="mood" data-mood="calm">
+                                <div class="mood-icon mood-5"><i class="far fa-smile"></i></div>
+                                <span>Tranquilo</span>
+                            </div>
+                            <div class="mood" data-mood="neutral">
+                                <div class="mood-icon mood-4"><i class="far fa-meh"></i></div>
+                                <span>Neutral</span>
+                            </div>
+                            <div class="mood" data-mood="sad">
+                                <div class="mood-icon mood-2"><i class="far fa-frown"></i></div>
+                                <span>Triste</span>
+                            </div>
+                            <div class="mood" data-mood="anxious">
+                                <div class="mood-icon mood-1"><i class="far fa-grimace"></i></div>
+                                <span>Ansioso</span>
+                            </div>
+                            <div class="mood" data-mood="angry">
+                                <div class="mood-icon mood-7"><i class="far fa-angry"></i></div>
+                                <span>Enojado</span>
+                            </div>
+                            <div class="mood" data-mood="motivated">
+                                <div class="mood-icon mood-3"><i class="fas fa-lightbulb"></i></div>
+                                <span>Motivado</span>
+                            </div>
+                            <div class="mood" data-mood="grateful">
+                                <div class="mood-icon mood-8"><i class="fas fa-hand-holding-heart"></i></div>
+                                <span>Agradecido</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-small">Registrar estado de ánimo</button>
+
+                        <!-- Emotion History -->
+                        <div class="emotion-history">
+                            <div class="history-header">
+                                <h3>Historial de Emociones</h3>
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <div id="emotion-history-list">
+                                <!-- Dynamic history items will be inserted here -->
+                                <div class="history-item">
+                                    <div class="history-icon mood-6"><i class="far fa-laugh-beam"></i></div>
+                                    <div class="history-details">
+                                        <div class="history-mood">Feliz</div>
+                                        <div class="history-date">10 de Junio, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="history-item">
+                                    <div class="history-icon mood-2"><i class="far fa-frown"></i></div>
+                                    <div class="history-details">
+                                        <div class="history-mood">Triste</div>
+                                        <div class="history-date">9 de Junio, 2025</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggested Resources / Professionals -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Recursos y Profesionales</h2>
+                            <i class="fas fa-hand-holding-medical"></i>
+                        </div>
+                        <div class="resources-list">
+                            <div class="resource">
+                                <div class="resource-icon"><i class="fas fa-book-open"></i></div>
+                                <div class="resource-info">
+                                    <h3>Artículo: Manejo de la Ansiedad</h3>
+                                    <p>Recursos de autoayuda</p>
+                                </div>
+                            </div>
+                            <div class="resource">
+                                <div class="resource-icon"><i class="fas fa-user-tie"></i></div>
+                                <div class="resource-info">
+                                    <h3>Dr. Elena Gómez</h3>
+                                    <p>Psicóloga Clínica</p>
+                                </div>
+                            </div>
+                            <div class="resource">
+                                <div class="resource-icon"><i class="fas fa-headphones-alt"></i></div>
+                                <div class="resource-info">
+                                    <h3>Podcast: Mentes en Calma</h3>
+                                    <p>Episodio sobre resiliencia</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Support Groups -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Grupos de Apoyo</h2>
+                            <i class="fas fa-people-arrows"></i>
+                        </div>
+                        <div class="groups-tabs">
+                            <div class="tab active" data-tab="joined">Unido</div>
+                            <div class="tab" data-tab="explore">Explorar</div>
+                        </div>
+                        <div id="joined-groups" class="tab-content active">
+                            <div class="group">
+                                <img src="https://placehold.co/60x60/7a5af5/ffffff?text=DP" alt="Group Icon">
+                                <div class="group-info">
+                                    <h3>Depresión y Ansiedad</h3>
+                                    <p>Un espacio seguro para compartir experiencias.</p>
+                                    <div class="group-members">
+                                        <i class="fas fa-users"></i>
+                                        <span>250 miembros</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <img src="https://placehold.co/60x60/ff7eb3/ffffff?text=AM" alt="Group Icon">
+                                <div class="group-info">
+                                    <h3>Autocuidado y Mindfulness</h3>
+                                    <p>Prácticas para el bienestar diario.</p>
+                                    <div class="group-members">
+                                        <i class="fas fa-users"></i>
+                                        <span>180 miembros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="explore-groups" class="tab-content">
+                            <div class="group">
+                                <img src="https://placehold.co/60x60/4ecdc4/ffffff?text=RS" alt="Group Icon">
+                                <div class="group-info">
+                                    <h3>Resiliencia y Superación</h3>
+                                    <p>Historias de fortaleza y crecimiento.</p>
+                                    <div class="group-members">
+                                        <i class="fas fa-users"></i>
+                                        <span>320 miembros</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <img src="https://placehold.co/60x60/937dff/ffffff?text=AT" alt="Group Icon">
+                                <div class="group-info">
+                                    <h3>Apoyo para Trastornos Alimentarios</h3>
+                                    <p>Comunidad de apoyo y recuperación.</p>
+                                    <div class="group-members">
+                                        <i class="fas fa-users"></i>
+                                        <span>95 miembros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-small">Ver todos los grupos</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- New Create Post Page -->
+            <section class="create-post-page" id="create-post-page">
+                <h2>Crear Nueva Publicación</h2>
+                <div class="create-post card">
+                    <div class="post-header">
+                        <img src="https://placehold.co/45x45/4ecdc4/ffffff?text=M" alt="Your Profile Picture">
+                        <input type="text" class="post-input" id="new-post-input" placeholder="¿Qué tienes en mente hoy, Usuario Actual?">
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-action">
+                            <i class="fas fa-image"></i>
+                            <span>Foto/Video</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-tag"></i>
+                            <span>Etiquetar</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-smile"></i>
+                            <span>Estado de Ánimo</span>
+                        </div>
+                        <button class="btn">Publicar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Page -->
+            <section class="settings-page" id="settings-page">
+                <h2>Configuración</h2>
+
+                <!-- Theme Settings -->
+                <div class="settings-section">
+                    <h3>Tema Visual</h3>
+                    <div class="settings-option">
+                        <label for="theme-select">Seleccionar Tema:</label>
+                        <div class="controls">
+                            <select id="theme-select">
+                                <option value="dark">Modo Oscuro</option>
+                                <option value="light">Modo Claro</option>
+                                <option value="purple-accent">Acento Púrpura</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Settings -->
+                <div class="settings-section">
+                    <h3>Privacidad</h3>
+                    <div class="settings-option">
+                        <label for="public-profile-toggle">Perfil Público:</label>
+                        <div class="controls">
+                            <label class="switch">
+                                <input type="checkbox" id="public-profile-toggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-option">
+                        <label for="allow-messages-toggle">Permitir Mensajes de No Amigos:</label>
+                        <div class="controls">
+                            <label class="switch">
+                                <input type="checkbox" id="allow-messages-toggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Settings -->
+                <div class="settings-section">
+                    <h3>Cuenta</h3>
+                    <div class="settings-option">
+                        <label for="username-input">Cambiar Nombre de Usuario:</label>
+                        <div class="controls">
+                            <input type="text" id="username-input" placeholder="Nuevo nombre">
+                            <button class="btn btn-small" id="save-username-btn">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Custom Modal for Alerts -->
+    <div class="modal-overlay" id="customAlertModal">
+        <div class="modal-content">
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button class="close-btn" id="modalCloseBtn">Aceptar</button>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase SDK imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- Firebase Initialization and Authentication ---
+        let app;
+        let db;
+        let auth;
+        let currentUserId = 'guest'; // Default to guest if no auth
+
+        // Access global variables provided by the Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Function to show custom alert modal
+        function showCustomAlert(title, message) {
+            const modal = document.getElementById('customAlertModal');
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            modal.classList.add('show');
+        }
+
+        // Event listener for closing the modal
+        document.getElementById('modalCloseBtn').addEventListener('click', () => {
+            document.getElementById('customAlertModal').classList.remove('show');
+        });
+
+
+        // Initialize Firebase and set up authentication state listener
+        window.onload = async function() {
+            try {
+                // Initialize Firebase app if not already initialized
+                if (!app) {
+                    app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+                }
+
+                // Listen for authentication state changes
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        // User is signed in.
+                        currentUserId = user.uid;
+                        document.getElementById('current-user-id').textContent = `ID: ${currentUserId}`;
+                        console.log("User signed in:", currentUserId);
+                        // Now Firestore operations can be performed safely
+                    } else {
+                        // User is signed out.
+                        currentUserId = crypto.randomUUID(); // Use a random UUID for anonymous users
+                        console.log("No user signed in. Attempting anonymous sign-in or using provided token.");
+
+                        try {
+                            if (initialAuthToken) {
+                                // Sign in with custom token if available
+                                const userCredential = await signInWithCustomToken(auth, initialAuthToken);
+                                currentUserId = userCredential.user.uid;
+                                console.log("Signed in with custom token:", currentUserId);
+                            } else {
+                                // Sign in anonymously if no custom token
+                                const userCredential = await signInAnonymously(auth);
+                                currentUserId = userCredential.user.uid;
+                                console.log("Signed in anonymously:", currentUserId);
+                            }
+                            document.getElementById('current-user-id').textContent = `ID: ${currentUserId}`;
+                        } catch (error) {
+                            console.error("Firebase Auth Error:", error);
+                            showCustomAlert("Error de Autenticación", `Hubo un problema al iniciar sesión: ${error.message}`);
+                            document.getElementById('current-user-id').textContent = 'Error de Auth';
+                        }
+                    }
+                    // After auth state is known, you can fetch user-specific data or enable features
+                });
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                showCustomAlert("Error de Firebase", "No se pudo inicializar Firebase. Consulta la consola para más detalles.");
+            }
+
+            // Call functions to set up other interactive elements
+            setupSpaceBackground();
+            setupRightColumnToggle();
+            setupMoodTracker();
+            setupCommentToggles();
+            setupTabNavigation();
+
+            // Load preferences and setup settings page
+            loadThemePreference();
+            loadPrivacySettings();
+            loadUsername();
+        };
+
+        // --- Space Background Effect (Existing) ---
+        function setupSpaceBackground() {
+            const spaceBg = document.getElementById('spaceBg');
+            const numStars = 100;
+
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.opacity = Math.random();
+                star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite alternate ease-in-out`;
+                spaceBg.appendChild(star);
+            }
+
+            const styleSheet = document.createElement('style');
+            styleSheet.type = 'text/css';
+            styleSheet.innerText = `
+                @keyframes twinkle {
+                    0% { opacity: 0.5; transform: scale(1); }
+                    50% { opacity: 1; transform: scale(1.2); }
+                    100% { opacity: 0.5; transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(styleSheet);
+        }
+
+        // --- Toggle Right Column Functionality ---
+        function setupRightColumnToggle() {
+            const toggleBtn = document.querySelector('.toggle-right-column');
+            const rightColumn = document.querySelector('.right-column');
+            const contentGrid = document.querySelector('.content-grid');
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+
+            // Initial state based on screen width
+            let isRightColumnVisible = window.innerWidth > 1200;
+            if (!isRightColumnVisible) {
+                rightColumn.classList.add('collapsed');
+            }
+
+            toggleBtn.addEventListener('click', () => {
+                isRightColumnVisible = !isRightColumnVisible;
+
+                if (window.innerWidth <= 1200) {
+                    // Mobile overlay behavior
+                    if (isRightColumnVisible) {
+                        rightColumn.classList.remove('collapsed');
+                        rightColumn.classList.add('active-mobile-overlay');
+                    } else {
+                        rightColumn.classList.remove('active-mobile-overlay');
+                        rightColumn.classList.add('collapsed');
+                    }
+                } else {
+                    // Desktop behavior
+                    if (isRightColumnVisible) {
+                        rightColumn.classList.remove('collapsed');
+                        contentGrid.style.gridTemplateColumns = '250px 1fr 250px';
+                    } else {
+                        rightColumn.classList.add('collapsed');
+                        contentGrid.style.gridTemplateColumns = '250px 1fr';
+                    }
+                }
+            });
+
+            // Handle resize events to adjust layout
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 1200) {
+                    // Desktop layout
+                    isRightColumnVisible = true;
+                    rightColumn.classList.remove('collapsed', 'active-mobile-overlay');
+                    contentGrid.style.gridTemplateColumns = '250px 1fr 250px';
+                    mainContent.style.marginLeft = '260px'; // Ensure correct margin
+                } else if (window.innerWidth <= 1200 && window.innerWidth > 992) {
+                    // Tablet layout (right column hidden by default, can be overlayed)
+                    isRightColumnVisible = false; // Reset visibility for mobile
+                    rightColumn.classList.add('collapsed'); // Ensure it's collapsed
+                    rightColumn.classList.remove('active-mobile-overlay'); // Remove overlay class
+                    contentGrid.style.gridTemplateColumns = '1fr'; // Main content expands
+                    mainContent.style.marginLeft = '260px'; // Keep sidebar margin
+                } else {
+                    // Mobile layout (sidebar collapsed, right column hidden)
+                    isRightColumnVisible = false; // Reset visibility for mobile
+                    rightColumn.classList.add('collapsed'); // Ensure it's collapsed
+                    rightColumn.classList.remove('active-mobile-overlay'); // Remove overlay class
+                    contentGrid.style.gridTemplateColumns = '1fr'; // Main content expands
+                    mainContent.style.marginLeft = '80px'; // Adjust margin for collapsed sidebar
+                }
+            });
+        }
+
+        // --- Mood Tracker Functionality ---
+        function setupMoodTracker() {
+            const moodsContainer = document.querySelector('.moods');
+            let selectedMood = null;
+
+            moodsContainer.addEventListener('click', (event) => {
+                const moodElement = event.target.closest('.mood');
+                if (moodElement) {
+                    // Remove 'selected' class from previously selected mood
+                    if (selectedMood && selectedMood !== moodElement) {
+                        selectedMood.classList.remove('selected');
+                    }
+                    // Toggle 'selected' class on the clicked mood
+                    moodElement.classList.toggle('selected');
+                    selectedMood = moodElement.classList.contains('selected') ? moodElement : null;
+                    console.log('Selected Mood:', selectedMood ? selectedMood.dataset.mood : 'None');
+                    showCustomAlert("Estado de Ánimo Seleccionado", `Has seleccionado: ${selectedMood ? selectedMood.dataset.mood : 'ninguno'}.`);
+                    // Here you would typically save this mood to Firestore or a local state
+                }
+            });
+        }
+
+        // --- Comment Section Toggle Functionality ---
+        function setupCommentToggles() {
+            document.querySelectorAll('.toggle-comments').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const postId = event.target.closest('.toggle-comments').dataset.postId;
+                    const commentsSection = document.getElementById(`comments-post-${postId}`);
+                    if (commentsSection) {
+                        commentsSection.style.display = commentsSection.style.display === 'block' ? 'none' : 'block';
+                    }
+                });
+            });
+
+            // Basic send comment functionality (without actual sending)
+            document.querySelectorAll('.send-comment').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const commentInput = event.target.closest('.add-comment').querySelector('.comment-input');
+                    if (commentInput.value.trim()) {
+                        showCustomAlert("Comentario Enviado", `Tu comentario: "${commentInput.value.trim()}" ha sido enviado.`);
+                        commentInput.value = ''; // Clear input
+                    } else {
+                        showCustomAlert("Error de Comentario", "El comentario no puede estar vacío.");
+                    }
+                });
+            });
+        }
+
+        // --- Tab Navigation for Groups ---
+        function setupTabNavigation() {
+            document.querySelectorAll('.groups-tabs .tab').forEach(tab => {
+                tab.addEventListener('click', (event) => {
+                    // Remove 'active' from all tabs and content
+                    document.querySelectorAll('.groups-tabs .tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+
+                    // Add 'active' to clicked tab and its content
+                    const selectedTab = event.target;
+                    selectedTab.classList.add('active');
+                    const targetContentId = selectedTab.dataset.tab + '-groups';
+                    document.getElementById(targetContentId).classList.add('active');
+                });
+            });
+        }
+
+        // --- Main Content / Page Toggles ---
+        function navigateToPage(pageName) {
+            const mainContentGrid = document.getElementById('main-content-grid');
+            const settingsPage = document.getElementById('settings-page');
+            const createPostPage = document.getElementById('create-post-page');
+
+            // Hide all main content sections first
+            mainContentGrid.style.display = 'none';
+            settingsPage.style.display = 'none';
+            createPostPage.style.display = 'none';
+
+            // Show the selected page
+            if (pageName === 'home') {
+                mainContentGrid.style.display = 'grid';
+            } else if (pageName === 'settings') {
+                settingsPage.style.display = 'block';
+            } else if (pageName === 'create-post') {
+                createPostPage.style.display = 'block';
+            }
+            // For other pages (friends, messages, etc.), you'd add similar logic
+
+            // Update active state in sidebar
+            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.nav-links a[data-page="${pageName}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            console.log(`Navegando a: ${pageName}`);
+        }
+
+        // --- Theme Management ---
+        function applyTheme(themeName) {
+            document.body.classList.remove('theme-light', 'theme-purple-accent'); // Remove all theme classes
+            if (themeName !== 'dark') { // 'dark' is default, no class needed
+                document.body.classList.add(`theme-${themeName}`);
+            }
+            localStorage.setItem('selectedTheme', themeName); // Save theme preference
+            console.log(`Tema cambiado a: ${themeName}`);
+            showCustomAlert("Tema Actualizado", `El tema ha sido cambiado a "${themeName}".`);
+        }
+
+        function loadThemePreference() {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'dark'; // Default to dark
+            const themeSelect = document.getElementById('theme-select');
+            if (themeSelect) {
+                themeSelect.value = savedTheme;
+                applyTheme(savedTheme);
+            }
+        }
+
+        // --- Privacy Settings Management ---
+        function savePrivacySettings() {
+            const isPublicProfile = document.getElementById('public-profile-toggle').checked;
+            const allowMessages = document.getElementById('allow-messages-toggle').checked;
+
+            // In a real app, you'd save these to Firestore for the currentUserId
+            console.log("Configuración de Privacidad Guardada:");
+            console.log("Perfil Público:", isPublicProfile);
+            console.log("Permitir Mensajes de No Amigos:", allowMessages);
+
+            // Simulate saving to local storage for demonstration
+            localStorage.setItem('privacySettings', JSON.stringify({ isPublicProfile, allowMessages }));
+            showCustomAlert("Privacidad Actualizada", "Tu configuración de privacidad ha sido guardada.");
+        }
+
+        function loadPrivacySettings() {
+            const savedSettings = JSON.parse(localStorage.getItem('privacySettings')) || {};
+            const publicProfileToggle = document.getElementById('public-profile-toggle');
+            const allowMessagesToggle = document.getElementById('allow-messages-toggle');
+
+            if (publicProfileToggle) {
+                publicProfileToggle.checked = savedSettings.isPublicProfile !== undefined ? savedSettings.isPublicProfile : true; // Default to public
+            }
+            if (allowMessagesToggle) {
+                allowMessagesToggle.checked = savedSettings.allowMessages !== undefined ? savedSettings.allowMessages : false; // Default to disallow
+            }
+        }
+
+        // --- Name Change Functionality ---
+        function changeUsername() {
+            const usernameInput = document.getElementById('username-input');
+            const newUsername = usernameInput ? usernameInput.value.trim() : '';
+
+            if (newUsername) {
+                // In a real app, you'd update this in Firestore for the currentUserId
+                document.getElementById('profile-display-name').textContent = newUsername;
+                document.getElementById('header-display-name').textContent = newUsername;
+                document.getElementById('new-post-input').placeholder = `¿Qué tienes en mente hoy, ${newUsername}?`; // Update new post page input
+
+                console.log("Nombre de usuario cambiado a:", newUsername);
+                showCustomAlert("Nombre Actualizado", `Tu nombre de usuario ha sido cambiado a "${newUsername}".`);
+                // Simulate saving to local storage
+                localStorage.setItem('userName', newUsername);
+            } else {
+                showCustomAlert("Error", "El nombre de usuario no puede estar vacío.");
+            }
+        }
+
+        function loadUsername() {
+            const savedUsername = localStorage.getItem('userName') || 'Usuario Actual';
+            const usernameInput = document.getElementById('username-input');
+            const profileDisplayName = document.getElementById('profile-display-name');
+            const headerDisplayName = document.getElementById('header-display-name');
+            const newPostInput = document.getElementById('new-post-input'); // Get the new post input
+
+            if (usernameInput) {
+                usernameInput.value = savedUsername;
+            }
+            if (profileDisplayName) {
+                profileDisplayName.textContent = savedUsername;
+            }
+            if (headerDisplayName) {
+                headerDisplayName.textContent = savedUsername;
+            }
+            if (newPostInput) { // Check if element exists before setting placeholder
+                newPostInput.placeholder = `¿Qué tienes en mente hoy, ${savedUsername}?`;
+            }
+        }
+
+        // Event listeners for settings page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navigate through sidebar links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = e.currentTarget.dataset.page;
+                    if (page === 'logout') {
+                        showCustomAlert("Cerrar Sesión", "Has cerrado tu sesión. ¡Esperamos verte pronto!");
+                        // Simulate logout: Clear local storage and reload, or direct to login page
+                        localStorage.clear();
+                        // For a real app, you'd call Firebase signOut here.
+                        // auth.signOut();
+                        // window.location.reload();
+                    } else {
+                        navigateToPage(page);
+                    }
+                });
+            });
+
+            // Theme select listener
+            const themeSelect = document.getElementById('theme-select');
+            if (themeSelect) {
+                themeSelect.addEventListener('change', (e) => {
+                    applyTheme(e.target.value);
+                });
+            }
+
+            // Privacy toggles listeners
+            const publicProfileToggle = document.getElementById('public-profile-toggle');
+            if (publicProfileToggle) {
+                publicProfileToggle.addEventListener('change', savePrivacySettings);
+            }
+
+            const allowMessagesToggle = document.getElementById('allow-messages-toggle');
+            if (allowMessagesToggle) {
+                allowMessagesToggle.addEventListener('change', savePrivacySettings);
+            }
+
+            // Save username button listener
+            const saveUsernameBtn = document.getElementById('save-username-btn');
+            if (saveUsernameBtn) {
+                saveUsernameBtn.addEventListener('click', changeUsername);
+            }
+
+            // Load preferences on page load
+            loadThemePreference();
+            loadPrivacySettings();
+            loadUsername();
+        });
+    </script>
+</body>
+</html>
