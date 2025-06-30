@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos - Border</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7a5af5;
+            --primary-light: #937dff;
+            --secondary: #ff7eb3;
+            --accent: #4ecdc4;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light: #f0f0f0;
+            --gray: #a0a0a0;
+            --dark-gray: #444;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #0a0a12 100%);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+            color: white;
+            padding: 25px 15px;
+            box-shadow: var(--shadow);
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            overflow-y: auto;
+            transition: var(--transition);
+            border-right: 1px solid rgba(122, 90, 245, 0.2);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+            margin-right: 12px;
+            color: var(--accent);
+            background: rgba(122, 90, 245, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+        }
+        
+        .logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #7a5af5, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .nav-links li {
+            margin-bottom: 8px;
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-size: 16px;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(122, 90, 245, 0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .nav-links i {
+            margin-right: 12px;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+            color: var(--primary-light);
+        }
+        
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            margin-top: 20px;
+            background: rgba(10, 10, 18, 0.6);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(122, 90, 245, 0.3);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .profile-mini:hover {
+            background: rgba(122, 90, 245, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        .profile-mini img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px rgba(122, 90, 245, 0.5);
+        }
+        
+        .profile-mini h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: white;
+        }
+        
+        .profile-mini p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 30px;
+            background: linear-gradient(to bottom, #0a0a12, #0f0f1a);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 42, 0.8);
+            border-radius: 30px;
+            padding: 8px 20px;
+            box-shadow: var(--shadow);
+            width: 400px;
+            border: 1px solid rgba(122, 90, 245, 0.3);
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            padding: 8px 15px;
+            width: 100%;
+            font-size: 15px;
+            outline: none;
+            color: white;
+        }
+        
+        .search-bar input::placeholder {
+            color: var(--gray);
+        }
+        
+        .search-bar i {
+            color: var(--primary-light);
+            font-size: 18px;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification, .messages, .toggle-right-column {
+            position: relative;
+            margin-right: 20px;
+            font-size: 22px;
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 5px 8px;
+            border-radius: var(--border-radius);
+        }
+        
+        .notification:hover, .messages:hover, .toggle-right-column:hover {
+            color: var(--primary-light);
+            transform: scale(1.1);
+            background: rgba(122, 90, 245, 0.1);
+        }
+        
+        .notification::after, .messages::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            border: 2px solid var(--dark);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 42, 0.8);
+            padding: 8px 15px;
+            border-radius: 30px;
+            border: 1px solid rgba(122, 90, 245, 0.3);
+            transition: var(--transition);
+        }
+        
+        .user-profile:hover {
+            background: rgba(122, 90, 245, 0.15);
+        }
+        
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px rgba(122, 90, 245, 0.4);
+        }
+        
+        /* Content Grid (for events page, adapted) */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column layout for events content */
+            gap: 25px;
+            max-width: 1200px; /* Limit width for better readability */
+            margin: 0 auto; /* Center the content */
+        }
+
+        .card {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(122, 90, 245, 0.1);
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Adjusted for consistency */
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--light);
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-header i {
+            color: var(--primary-light);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .card-header i:hover {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Create Event Form */
+        .create-event-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--light);
+        }
+
+        .create-event-form input[type="text"],
+        .create-event-form input[type="date"],
+        .create-event-form input[type="time"],
+        .create-event-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(122, 90, 245, 0.3);
+            border-radius: var(--border-radius);
+            background: rgba(26, 26, 42, 0.7);
+            color: var(--light);
+            font-size: 15px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .create-event-form input[type="text"]::placeholder,
+        .create-event-form textarea::placeholder {
+            color: var(--gray);
+        }
+
+        .create-event-form input[type="text"]:focus,
+        .create-event-form input[type="date"]:focus,
+        .create-event-form input[type="time"]:focus,
+        .create-event-form textarea:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 10px rgba(122, 90, 245, 0.2);
+        }
+        
+        .create-event-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .create-event-form .btn {
+            width: auto;
+            margin-top: 10px;
+            padding: 12px 25px;
+            font-size: 16px;
+        }
+
+        /* Event List */
+        .events-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .event-card {
+            background: rgba(26, 26, 42, 0.8);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid rgba(122, 90, 245, 0.2);
+            transition: var(--transition);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(122, 90, 245, 0.3);
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(122, 90, 245, 0.1);
+        }
+
+        .event-info-content {
+            padding: 20px;
+        }
+
+        .event-info-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary-light);
+        }
+
+        .event-info-content p {
+            font-size: 15px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .event-meta {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .event-meta i {
+            margin-right: 8px;
+            color: var(--accent);
+        }
+
+        .event-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            max-height: 70px; /* Limit height for description */
+            overflow: hidden; /* Hide overflowing text */
+            text-overflow: ellipsis; /* Add ellipsis for overflow */
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limit to 3 lines */
+            -webkit-box-orient: vertical;
+        }
+
+        .event-actions {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .event-actions .btn {
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 20px;
+        }
+        
+        /* Space Background Effect */
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #0f0f1a 0%, #05050a 100%);
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Custom Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--dark-card);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--primary);
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-content h3 {
+            color: var(--primary-light);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            color: var(--light);
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .modal-content .close-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(122, 90, 245, 0.3);
+        }
+
+        .modal-content .close-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 90, 245, 0.4);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                padding: 25px 10px;
+            }
+            .logo h1, .profile-mini h3, .profile-mini p, .nav-links span {
+                display: none;
+            }
+            .logo {
+                justify-content: center;
+            }
+            .nav-links a {
+                justify-content: center;
+                padding: 15px;
+            }
+            .nav-links i {
+                margin-right: 0;
+                font-size: 24px;
+            }
+            .profile-mini {
+                justify-content: center;
+                padding: 15px 5px;
+            }
+            .profile-mini img {
+                margin-right: 0;
+            }
+            .main-content {
+                margin-left: 80px;
+            }
+            .search-bar {
+                width: 100%;
+            }
+            .user-actions {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            .user-actions > div {
+                margin-right: 10px;
+            }
+            .events-list {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                box-shadow: none;
+                border-right: none;
+                padding-bottom: 0;
+            }
+            .logo, .profile-mini {
+                display: none;
+            }
+            .nav-links {
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+                margin-top: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+                padding-top: 10px;
+            }
+            .nav-links li {
+                margin-bottom: 0;
+            }
+            .nav-links a {
+                flex-direction: column;
+                font-size: 12px;
+                padding: 8px 5px;
+            }
+            .nav-links i {
+                margin-right: 0;
+                margin-bottom: 5px;
+                font-size: 20px;
+            }
+            .search-bar {
+                width: 100%;
+                order: 1;
+                margin-bottom: 15px;
+            }
+            .user-actions {
+                order: 2;
+                width: 100%;
+                justify-content: space-around;
+                margin-bottom: 15px;
+            }
+            .user-profile {
+                display: none;
+            }
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .events-list {
+                grid-template-columns: 1fr; /* Single column on very small screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .search-bar, .user-actions {
+                width: 100%;
+                margin-right: 0;
+            }
+            .notification, .messages, .toggle-right-column {
+                margin-right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Space Background -->
+    <div class="space-bg" id="space-bg"></div>
+    
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>Border</h1>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                <li><a href="amigos.html"><i class="fas fa-user-friends"></i> <span>Amigos</span></a></li>
+                <li><a href="grupos.html"><i class="fas fa-users"></i> <span>Grupos</span></a></li>
+                <li><a href="eventos.html" class="active"><i class="fas fa-calendar-alt"></i> <span>Eventos</span></a></li>
+                <li><a href="recursos.html"><i class="fas fa-book-open"></i> <span>Recursos</span></a></li>
+                <li><a href="terapeutas.html"><i class="fas fa-comment-medical"></i> <span>Terapeutas</span></a></li>
+                <li><a href="bienestar.html"><i class="fas fa-heartbeat"></i> <span>Bienestar</span></a></li>
+                <li><a href="configuracion.html"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+            </ul>
+            
+            <div class="profile-mini">
+                <img src="https://placehold.co/200x200/7a5af5/ffffff?text=User" alt="Perfil">
+                <div>
+                    <h3>Mayra Schwarzschild</h3>
+                    <p>Miembro desde 2023</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar en Border...">
+                </div>
+                
+                <div class="user-actions">
+                    <div class="notification">
+                        <i class="far fa-bell"></i>
+                    </div>
+                    <div class="messages">
+                        <i class="far fa-envelope"></i>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://placehold.co/200x200/7a5af5/ffffff?text=User" alt="Usuario">
+                        <div>
+                            <h3>Mayra Schwarzschild</h3>
+                            <p>Trastorno Límite de la Personalidad</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-grid">
+                <!-- Create Event Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Crear Nuevo Evento</h2>
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <form id="create-event-form" class="create-event-form">
+                        <label for="event-title">Título del Evento:</label>
+                        <input type="text" id="event-title" placeholder="Ej: Taller de Mindfulness" required>
+
+                        <label for="event-date">Fecha:</label>
+                        <input type="date" id="event-date" required>
+
+                        <label for="event-time">Hora:</label>
+                        <input type="time" id="event-time" required>
+
+                        <label for="event-location">Ubicación:</label>
+                        <input type="text" id="event-location" placeholder="Ej: Online (Zoom)" required>
+
+                        <label for="event-description">Descripción:</label>
+                        <textarea id="event-description" placeholder="Describe brevemente el evento..." required></textarea>
+
+                        <button type="submit" class="btn"><i class="fas fa-calendar-plus"></i> Publicar Evento</button>
+                    </form>
+                </div>
+
+                <!-- Upcoming Events Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Próximos Eventos</h2>
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div id="upcoming-events-list" class="events-list">
+                        <!-- Example Event 1 (Pre-loaded) -->
+                        <div class="event-card">
+                            <img src="https://placehold.co/600x180/7a5af5/ffffff?text=Meditacion" alt="Sesión de Meditación">
+                            <div class="event-info-content">
+                                <h3>Sesión de Meditación Guiada</h3>
+                                <p class="event-meta"><i class="fas fa-calendar-day"></i> 15 de julio de 2025</p>
+                                <p class="event-meta"><i class="fas fa-clock"></i> 18:00 - 19:00 hs</p>
+                                <p class="event-meta"><i class="fas fa-map-marker-alt"></i> Online (Zoom)</p>
+                                <p class="event-description">Una sesión relajante para reducir el estrés y conectar con tu interior. No se requiere experiencia previa.</p>
+                                <div class="event-actions">
+                                    <button class="btn btn-outline btn-small details-btn"><i class="fas fa-info-circle"></i> Detalles</button>
+                                    <button class="btn btn-small attend-btn"><i class="fas fa-check-circle"></i> Asistir</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Example Event 2 (Pre-loaded) -->
+                        <div class="event-card">
+                            <img src="https://placehold.co/600x180/4ecdc4/ffffff?text=Arteterapia" alt="Taller de Arteterapia">
+                            <div class="event-info-content">
+                                <h3>Taller de Arteterapia "Expresarte"</h3>
+                                <p class="event-meta"><i class="fas fa-calendar-day"></i> 22 de agosto de 2025</p>
+                                <p class="event-meta"><i class="fas fa-clock"></i> 15:30 - 17:30 hs</p>
+                                <p class="event-meta"><i class="fas fa-map-marker-alt"></i> Espacio Creativo "Alma"</p>
+                                <p class="event-description">Explora tus emociones a través de la pintura y el dibujo en un ambiente de apoyo. Materiales incluidos.</p>
+                                <div class="event-actions">
+                                    <button class="btn btn-outline btn-small details-btn"><i class="fas fa-info-circle"></i> Detalles</button>
+                                    <button class="btn btn-small attend-btn"><i class="fas fa-check-circle"></i> Asistir</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Example Event 3 (Added) -->
+                        <div class="event-card">
+                            <img src="https://placehold.co/600x180/ff7eb3/ffffff?text=Charla" alt="Charla sobre Manejo del Estrés">
+                            <div class="event-info-content">
+                                <h3>Charla sobre Manejo del Estrés</h3>
+                                <p class="event-meta"><i class="fas fa-calendar-day"></i> 5 de septiembre de 2025</p>
+                                <p class="event-meta"><i class="fas fa-clock"></i> 19:00 - 20:30 hs</p>
+                                <p class="event-meta"><i class="fas fa-map-marker-alt"></i> Centro de Bienestar Integral</p>
+                                <p class="event-description">Aprende técnicas efectivas para gestionar el estrés en tu vida diaria y mejorar tu bienestar general.</p>
+                                <div class="event-actions">
+                                    <button class="btn btn-outline btn-small details-btn"><i class="fas fa-info-circle"></i> Detalles</button>
+                                    <button class="btn btn-small attend-btn"><i class="fas fa-check-circle"></i> Asistir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Past Events Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Eventos Anteriores</h2>
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div id="past-events-list" class="events-list">
+                        <!-- Example Past Event 1 -->
+                        <div class="event-card">
+                            <img src="https://placehold.co/600x180/937dff/ffffff?text=Webinar" alt="Webinar Resiliencia">
+                            <div class="event-info-content">
+                                <h3>Webinar: Fomentando la Resiliencia</h3>
+                                <p class="event-meta"><i class="fas fa-calendar-day"></i> 10 de junio de 2025</p>
+                                <p class="event-meta"><i class="fas fa-clock"></i> 10:00 - 11:30 hs</p>
+                                <p class="event-meta"><i class="fas fa-map-marker-alt"></i> Online</p>
+                                <p class="event-description">Exploramos herramientas para desarrollar la resiliencia en tiempos difíciles. Grabación disponible en la sección de Recursos.</p>
+                                <div class="event-actions">
+                                    <button class="btn btn-outline btn-small details-btn" disabled><i class="fas fa-info-circle"></i> Detalles</button>
+                                    <button class="btn btn-small" disabled>Finalizado</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Example Past Event 2 -->
+                        <div class="event-card">
+                            <img src="https://placehold.co/600x180/ff7eb3/ffffff?text=Grupo+Apoyo" alt="Charla de Apertura: Grupo de Apoyo para Ansiedad">
+                            <div class="event-info-content">
+                                <h3>Charla de Apertura: Grupo de Apoyo para Ansiedad</h3>
+                                <p class="event-meta"><i class="fas fa-calendar-day"></i> 25 de mayo de 2025</p>
+                                <p class="event-meta"><i class="fas fa-clock"></i> 17:00 - 18:30 hs</p>
+                                <p class="event-meta"><i class="fas fa-map-marker-alt"></i> Salón Comunitario</p>
+                                <p class="event-description">Sesión introductoria de nuestro nuevo grupo de apoyo. Un espacio para compartir y crecer juntos.</p>
+                                <div class="event-actions">
+                                    <button class="btn btn-outline btn-small details-btn" disabled><i class="fas fa-info-circle"></i> Detalles</button>
+                                    <button class="btn btn-small" disabled>Finalizado</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal Structure -->
+    <div class="modal-overlay" id="custom-modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-title">¡Acción Realizada!</h3>
+            <p id="modal-message">Este es un mensaje de prueba.</p>
+            <button class="close-btn" id="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Star background effect (reused from other pages)
+            const spaceBg = document.getElementById('space-bg');
+            const numStars = 100;
+            for (let i = 0; i < numStars; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDuration = Math.random() * 2 + 1 + 's';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.style.opacity = Math.random();
+                star.style.boxShadow = `0 0 ${Math.random() * 5 + 2}px white`;
+                spaceBg.appendChild(star);
+            }
+
+            // --- Custom Modal Logic (reused from other pages) ---
+            const modalOverlay = document.getElementById('custom-modal-overlay');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            /**
+             * Muestra el modal personalizado con un título y mensaje.
+             * @param {string} title - El título del modal.
+             * @param {string} message - El mensaje a mostrar.
+             */
+            function showCustomModal(title, message) {
+                modalTitle.innerHTML = title; // Use innerHTML to allow <br> for line breaks
+                modalMessage.innerHTML = message; // Use innerHTML for line breaks
+                modalOverlay.classList.add('show');
+            }
+
+            // Cierra el modal cuando se hace clic en el botón de cerrar
+            if (modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', () => {
+                    modalOverlay.classList.remove('show');
+                });
+            }
+
+            // Cierra el modal si se hace clic fuera de su contenido
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', (event) => {
+                    if (event.target === modalOverlay) {
+                        modalOverlay.classList.remove('show');
+                    }
+                });
+            }
+
+            // --- Event Creation Logic ---
+            const createEventForm = document.getElementById('create-event-form');
+            const upcomingEventsList = document.getElementById('upcoming-events-list');
+
+            createEventForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                const title = document.getElementById('event-title').value;
+                const date = document.getElementById('event-date').value;
+                const time = document.getElementById('event-time').value;
+                const location = document.getElementById('event-location').value;
+                const description = document.getElementById('event-description').value;
+
+                if (!title || !date || !time || !location || !description) {
+                    showCustomModal('Error', 'Por favor, completa todos los campos del evento.');
+                    return;
+                }
+
+                // Use placehold.co for all dynamic images for reliability
+                const imageUrls = [
+                    "https://placehold.co/600x180/7a5af5/ffffff?text=Nuevo+Evento",
+                    "https://placehold.co/600x180/4ecdc4/ffffff?text=Evento+Comunitario",
+                    "https://placehold.co/600x180/ff7eb3/ffffff?text=Taller+Online",
+                    "https://placehold.co/600x180/937dff/ffffff?text=Sesion+Grupo"
+                ];
+                const randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+
+                const newEventCard = `
+                    <div class="event-card">
+                        <img src="${randomImageUrl}" alt="${title}">
+                        <div class="event-info-content">
+                            <h3>${title}</h3>
+                            <p class="event-meta"><i class="fas fa-calendar-day"></i> ${new Date(date).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                            <p class="event-meta"><i class="fas fa-clock"></i> ${time} hs</p>
+                            <p class="event-meta"><i class="fas fa-map-marker-alt"></i> ${location}</p>
+                            <p class="event-description">${description}</p>
+                            <div class="event-actions">
+                                <button class="btn btn-outline btn-small details-btn"><i class="fas fa-info-circle"></i> Detalles</button>
+                                <button class="btn btn-small attend-btn"><i class="fas fa-check-circle"></i> Asistir</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                upcomingEventsList.insertAdjacentHTML('afterbegin', newEventCard); // Add new event at the top
+                showCustomModal('Evento Creado', `Tu evento "${title}" ha sido publicado.`);
+                createEventForm.reset(); // Clear the form
+            });
+
+            // --- Event Actions Logic (for pre-loaded and new events) ---
+            document.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.classList.contains('details-btn')) {
+                    const eventCard = target.closest('.event-card');
+                    const title = eventCard.querySelector('h3').textContent;
+                    const fullDescription = eventCard.querySelector('.event-description').textContent;
+                    const date = eventCard.querySelector('.event-meta:nth-child(1)').textContent;
+                    const time = eventCard.querySelector('.event-meta:nth-child(2)').textContent;
+                    const location = eventCard.querySelector('.event-meta:nth-child(3)').textContent;
+
+                    showCustomModal(
+                        `Detalles del Evento: ${title}`,
+                        `${date}<br>${time}<br>${location}<br><br>${fullDescription}`
+                    );
+                } else if (target.classList.contains('attend-btn')) {
+                    const eventCard = target.closest('.event-card');
+                    const title = eventCard.querySelector('h3').textContent;
+                    showCustomModal('Confirmación de Asistencia', `¡Gracias por confirmar tu asistencia a "${title}"!`);
+                    // In a real app, this would register the user's attendance
+                }
+            });
+        });
+    </script>
+</body>
+</html>
