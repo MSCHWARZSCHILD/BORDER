@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigos - Border</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Variables de CSS */
+        :root {
+            --primary: #7a5af5;
+            --primary-light: #937dff;
+            --secondary: #ff7eb3;
+            --accent: #4ecdc4;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light: #f0f0f0;
+            --gray: #a0a0a0;
+            --dark-gray: #444;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+        
+        /* Reseteo básico y tipografía */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #0a0a12 100%);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden; /* Evita el scroll horizontal */
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+            color: white;
+            padding: 25px 15px;
+            box-shadow: var(--shadow);
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            overflow-y: auto;
+            transition: var(--transition);
+            border-right: 1px solid rgba(122, 90, 245, 0.2);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+            margin-right: 12px;
+            color: var(--accent);
+            background: rgba(122, 90, 245, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+        }
+        
+        .logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #7a5af5, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .nav-links li {
+            margin-bottom: 8px;
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-size: 16px;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(122, 90, 245, 0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .nav-links i {
+            margin-right: 12px;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+            color: var(--primary-light);
+        }
+        
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            margin-top: 20px;
+            background: rgba(10, 10, 18, 0.6);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(122, 90, 245, 0.3);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .profile-mini:hover {
+            background: rgba(122, 90, 245, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        .profile-mini img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px rgba(122, 90, 245, 0.5);
+        }
+        
+        .profile-mini h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: white;
+        }
+        
+        .profile-mini p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 30px;
+            background: linear-gradient(to bottom, #0a0a12, #0f0f1a);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 42, 0.8);
+            border-radius: 30px;
+            padding: 8px 20px;
+            box-shadow: var(--shadow);
+            width: 400px;
+            border: 1px solid rgba(122, 90, 245, 0.3);
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            padding: 8px 15px;
+            width: 100%;
+            font-size: 15px;
+            outline: none;
+            color: white;
+        }
+        
+        .search-bar input::placeholder {
+            color: var(--gray);
+        }
+        
+        .search-bar i {
+            color: var(--primary-light);
+            font-size: 18px;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification, .messages {
+            position: relative;
+            margin-right: 20px;
+            font-size: 22px;
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .notification:hover, .messages:hover {
+            color: var(--primary-light);
+            transform: scale(1.1);
+        }
+        
+        .notification::after, .messages::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            border: 2px solid var(--dark);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 42, 0.8);
+            padding: 8px 15px;
+            border-radius: 30px;
+            border: 1px solid rgba(122, 90, 245, 0.3);
+            transition: var(--transition);
+        }
+        
+        .user-profile:hover {
+            background: rgba(122, 90, 245, 0.15);
+        }
+        
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px rgba(122, 90, 245, 0.4);
+        }
+        
+        /* Content Grid (for main content layout) */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column for friends list */
+            gap: 25px;
+        }
+        
+        .card {
+            background: var(--dark-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(122, 90, 245, 0.1);
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(122, 90, 245, 0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--light);
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-header i {
+            color: var(--primary-light);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .card-header i:hover {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+        
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(122, 90, 245, 0.3);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(122, 90, 245, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(122, 90, 245, 0.1);
+            box-shadow: 0 4px 15px rgba(122, 90, 245, 0.2);
+        }
+        
+        .btn-small {
+            padding: 6px 15px;
+            font-size: 14px;
+        }
+
+        /* Friend Listing specific styles */
+        .friend-listing {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(26, 26, 42, 0.5);
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            border: 1px solid rgba(122, 90, 245, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .friend-listing:hover {
+            background: rgba(122, 90, 245, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(122, 90, 245, 0.2);
+        }
+
+        .friend-listing img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--primary);
+        }
+
+        .friend-details {
+            flex: 1;
+        }
+
+        .friend-details h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--light);
+            margin-bottom: 5px;
+        }
+
+        .friend-details p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .friend-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Space Background Effect (retained for all pages) */
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #0f0f1a 0%, #05050a 100%);
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Custom Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--dark-card);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--primary);
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-content h3 {
+            color: var(--primary-light);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            color: var(--light);
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .modal-content .close-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(122, 90, 245, 0.3);
+        }
+
+        .modal-content .close-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(122, 90, 245, 0.4);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                padding: 25px 10px;
+            }
+            
+            .logo h1, .profile-mini h3, .profile-mini p, .nav-links span {
+                display: none;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .nav-links a {
+                justify-content: center;
+                padding: 15px;
+            }
+            
+            .nav-links i {
+                margin-right: 0;
+                font-size: 24px;
+            }
+            
+            .profile-mini {
+                justify-content: center;
+                padding: 15px 5px;
+            }
+            
+            .profile-mini img {
+                margin-right: 0;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+            .search-bar {
+                width: 100%; /* Full width on smaller screens */
+            }
+            .user-actions {
+                flex-wrap: wrap; /* Wrap actions on small screens */
+                justify-content: flex-end;
+            }
+            .user-actions > div {
+                margin-right: 10px; /* Adjust spacing */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0; /* Remove sidebar margin on very small screens if sidebar is toggled or hidden */
+                padding: 20px;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative; /* Allow sidebar to stack on top */
+                box-shadow: none;
+                border-right: none;
+                padding-bottom: 0;
+            }
+            .logo, .profile-mini {
+                display: none; /* Hide logo and profile mini on very small screens, could add a mobile nav toggle */
+            }
+            .nav-links {
+                display: flex; /* Make navigation links horizontal */
+                justify-content: space-around;
+                width: 100%;
+                margin-top: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+                padding-top: 10px;
+            }
+            .nav-links li {
+                margin-bottom: 0;
+            }
+            .nav-links a {
+                flex-direction: column; /* Stack icon and text */
+                font-size: 12px;
+                padding: 8px 5px;
+            }
+            .nav-links i {
+                margin-right: 0;
+                margin-bottom: 5px;
+                font-size: 20px;
+            }
+            .search-bar {
+                width: 100%; /* Occupy full width */
+                order: 1; /* Place search bar first */
+                margin-bottom: 15px;
+            }
+            .user-actions {
+                order: 2; /* Place user actions second */
+                width: 100%;
+                justify-content: space-around;
+                margin-bottom: 15px;
+            }
+            .user-profile {
+                display: none; /* Hide full user profile on very small screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .search-bar, .user-actions {
+                width: 100%;
+                margin-right: 0;
+            }
+            .notification, .messages {
+                margin-right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Space Background -->
+    <div class="space-bg" id="space-bg"></div>
+    
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>Border</h1>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                <li><a href="amigos.html" class="active"><i class="fas fa-user-friends"></i> <span>Amigos</span></a></li>
+                <li><a href="grupos.html"><i class="fas fa-users"></i> <span>Grupos</span></a></li>
+                <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> <span>Eventos</span></a></li>
+                <li><a href="recursos.html"><i class="fas fa-book-open"></i> <span>Recursos</span></a></li>
+                <li><a href="terapeutas.html"><i class="fas fa-comment-medical"></i> <span>Terapeutas</span></a></li>
+                <li><a href="bienestar.html"><i class="fas fa-heartbeat"></i> <span>Bienestar</span></a></li>
+                <li><a href="configuracion.html"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+            </ul>
+            
+            <div class="profile-mini">
+                <img src="https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Perfil" onerror="this.onerror=null;this.src='https://placehold.co/200x200/7a5af5/ffffff?text=User';">
+                <div>
+                    <h3>Mayra Schwarzschild</h3>
+                    <p>Miembro desde 2023</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar amigos...">
+                </div>
+                
+                <div class="user-actions">
+                    <div class="notification">
+                        <i class="far fa-bell"></i>
+                    </div>
+                    <div class="messages">
+                        <i class="far fa-envelope"></i>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Usuario" onerror="this.onerror=null;this.src='https://placehold.co/200x200/7a5af5/ffffff?text=User';">
+                        <div>
+                            <h3>Mayra Schwarzschild</h3>
+                            <p>Trastorno Bipolar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-grid">
+                <!-- My Friends List -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Mis Amigos</h2>
+                        <i class="fas fa-user-plus" title="Añadir amigo"></i>
+                    </div>
+                    <div class="friends-list">
+                        <!-- Example Friend 1 -->
+                        <div class="friend-listing">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Amigo Laura" onerror="this.onerror=null;this.src='https://placehold.co/200x200/4ecdc4/ffffff?text=Friend';">
+                            <div class="friend-details">
+                                <h3>Laura V.</h3>
+                                <p>Depresión, Ansiedad</p>
+                            </div>
+                            <div class="friend-actions">
+                                <button class="btn btn-small btn-outline message-btn" data-friend-name="Laura V."><i class="fas fa-comment"></i> Mensaje</button>
+                                <button class="btn btn-small view-profile-btn" data-friend-name="Laura V."><i class="fas fa-eye"></i> Ver Perfil</button>
+                            </div>
+                        </div>
+                        <!-- Example Friend 2 -->
+                        <div class="friend-listing">
+                            <img src="https://images.unsplash.com/photo-1507003211169-e695c5b05872?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Amigo Juan" onerror="this.onerror=null;this.src='https://placehold.co/200x200/ff7eb3/ffffff?text=Friend';">
+                            <div class="friend-details">
+                                <h3>Juan M.</h3>
+                                <p>Trastorno Bipolar</p>
+                            </div>
+                            <div class="friend-actions">
+                                <button class="btn btn-small btn-outline message-btn" data-friend-name="Juan M."><i class="fas fa-comment"></i> Mensaje</button>
+                                <button class="btn btn-small view-profile-btn" data-friend-name="Juan M."><i class="fas fa-eye"></i> Ver Perfil</button>
+                            </div>
+                        </div>
+                        <!-- Example Friend 3 -->
+                        <div class="friend-listing">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Amigo Sofía" onerror="this.onerror=null;this.src='https://placehold.co/200x200/7a5af5/ffffff?text=Friend';">
+                            <div class="friend-details">
+                                <h3>Sofía G.</h3>
+                                <p>TOC, Ansiedad</p>
+                            </div>
+                            <div class="friend-actions">
+                                <button class="btn btn-small btn-outline message-btn" data-friend-name="Sofía G."><i class="fas fa-comment"></i> Mensaje</button>
+                                <button class="btn btn-small view-profile-btn" data-friend-name="Sofía G."><i class="fas fa-eye"></i> Ver Perfil</button>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline show-all-friends-btn" style="width: 100%; margin-top: 20px;"><i class="fas fa-user-friends"></i> Ver todos mis amigos</button>
+                    </div>
+                </div>
+
+                <!-- Friend Suggestions -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Sugerencias de Amigos</h2>
+                        <i class="fas fa-lightbulb" title="Sugerencias"></i>
+                    </div>
+                    <div class="suggestions-list">
+                        <!-- Example Suggestion 1 -->
+                        <div class="friend-listing">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Sugerencia Pablo" onerror="this.onerror=null;this.src='https://placehold.co/200x200/0984e3/ffffff?text=Suggest';">
+                            <div class="friend-details">
+                                <h3>Pablo R.</h3>
+                                <p>Intereses: Meditación, Grupos de apoyo</p>
+                            </div>
+                            <div class="friend-actions">
+                                <button class="btn btn-small add-friend-btn" data-friend-name="Pablo R."><i class="fas fa-user-plus"></i> Añadir</button>
+                            </div>
+                        </div>
+                        <!-- Example Suggestion 2 -->
+                        <div class="friend-listing">
+                            <img src="https://images.unsplash.com/photo-1529626465-b778726dc562?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Sugerencia Ana" onerror="this.onerror=null;this.src='https://placehold.co/200x200/00b894/ffffff?text=Suggest';">
+                            <div class="friend-details">
+                                <h3>Ana S.</h3>
+                                <p>Intereses: Bienestar, Terapias alternativas</p>
+                            </div>
+                            <div class="friend-actions">
+                                <button class="btn btn-small add-friend-btn" data-friend-name="Ana S."><i class="fas fa-user-plus"></i> Añadir</button>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline find-connections-btn" style="width: 100%; margin-top: 20px;"><i class="fas fa-users-medical"></i> Buscar nuevas conexiones</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal Structure -->
+    <div class="modal-overlay" id="custom-modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-title">¡Acción Realizada!</h3>
+            <p id="modal-message">Este es un mensaje de prueba.</p>
+            <button class="close-btn" id="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Star background effect
+            const spaceBg = document.getElementById('space-bg');
+            const numStars = 100; // Reduced for performance, can be increased
+            for (let i = 0; i < numStars; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 1 + 'px'; // 1 to 4px
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDuration = Math.random() * 2 + 1 + 's'; // 1 to 3s
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.style.opacity = Math.random();
+                star.style.boxShadow = `0 0 ${Math.random() * 5 + 2}px white`; // Glow effect
+                spaceBg.appendChild(star);
+            }
+
+            // --- Custom Modal Logic ---
+            const modalOverlay = document.getElementById('custom-modal-overlay');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            /**
+             * Muestra el modal personalizado con un título y mensaje.
+             * @param {string} title - El título del modal.
+             * @param {string} message - El mensaje a mostrar.
+             */
+            function showCustomModal(title, message) {
+                modalTitle.textContent = title;
+                modalMessage.textContent = message;
+                modalOverlay.classList.add('show');
+            }
+
+            // Cierra el modal cuando se hace clic en el botón de cerrar
+            if (modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', () => {
+                    modalOverlay.classList.remove('show');
+                });
+            }
+
+            // Cierra el modal si se hace clic fuera de su contenido
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', (event) => {
+                    if (event.target === modalOverlay) {
+                        modalOverlay.classList.remove('show');
+                    }
+                });
+            }
+
+            // --- Button Event Listeners ---
+
+            // Mensaje Button
+            document.querySelectorAll('.message-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent parent friend-listing click
+                    const friendName = button.dataset.friendName;
+                    showCustomModal('Mensaje', `Abriendo chat con ${friendName}...`);
+                });
+            });
+
+            // Ver Perfil Button
+            document.querySelectorAll('.view-profile-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent parent friend-listing click
+                    const friendName = button.dataset.friendName;
+                    showCustomModal('Ver Perfil', `Redirigiendo al perfil de ${friendName}...`);
+                    // In a real app, you would navigate: window.location.href = `profile.html?user=${friendName}`;
+                });
+            });
+
+            // Añadir Button (suggestions)
+            document.querySelectorAll('.add-friend-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent parent friend-listing click
+                    const friendName = button.dataset.friendName;
+                    showCustomModal('Solicitud de Amistad', `Solicitud de amistad enviada a ${friendName}.`);
+                    button.textContent = 'Enviado';
+                    button.disabled = true;
+                    button.classList.add('btn-outline'); // Make it look disabled/sent
+                    button.classList.remove('btn');
+                });
+            });
+
+            // Ver todos mis amigos Button
+            const showAllFriendsBtn = document.querySelector('.show-all-friends-btn');
+            if (showAllFriendsBtn) {
+                showAllFriendsBtn.addEventListener('click', () => {
+                    showCustomModal('Amigos', 'Cargando todos tus amigos...');
+                    // In a real app, you would load more friends or navigate to a dedicated friends page
+                });
+            }
+
+            // Buscar nuevas conexiones Button
+            const findConnectionsBtn = document.querySelector('.find-connections-btn');
+            if (findConnectionsBtn) {
+                findConnectionsBtn.addEventListener('click', () => {
+                    showCustomModal('Sugerencias', 'Buscando nuevas conexiones para ti...');
+                    // In a real app, this would trigger a search or refresh suggestions
+                });
+            }
+
+            // Toggle for adding friend/viewing profile when clicking the whole listing
+            document.querySelectorAll('.friend-listing').forEach(listing => {
+                const addBtn = listing.querySelector('.add-friend-btn');
+                const viewProfileBtn = listing.querySelector('.view-profile-btn');
+
+                if (!addBtn && viewProfileBtn) { // Only add click to listing if it's "My Friends" and has a view profile button
+                    listing.addEventListener('click', () => {
+                        const friendName = listing.querySelector('h3').textContent;
+                        showCustomModal('Ver Perfil', `Redirigiendo al perfil de ${friendName}...`);
+                        // window.location.href = `profile.html?user=${friendName}`;
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
